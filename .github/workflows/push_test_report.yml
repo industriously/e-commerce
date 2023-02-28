@@ -64,7 +64,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: ${{ vars.GIST_ID }}
-          filename: coverage_account.json
+          filename: coverage_e_commerce.json
           label: coverage
           message: ${{ steps.coverageComment.outputs.coverage }}%
           color: ${{ steps.coverageComment.outputs.color }}

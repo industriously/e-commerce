@@ -1,7 +1,7 @@
 {
-  "name": "nestddd",
+  "name": "e-commerce",
   "version": "0.0.1",
-  "description": "nestjs template for ddd",
+  "description": "e-commerce server based on NestJS",
   "author": "rojiwon",
   "private": true,
   "license": "UNLICENSED",
@@ -51,8 +51,7 @@
     "joi": "^17.8.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "typia": "^3.6.2",
-    "winston": "^3.8.2"
+    "typia": "^3.6.2"
   },
   "devDependencies": {
     "@nestia/sdk": "^1.0.8",

@@ -3,12 +3,12 @@
   "servers": [
     {
       "url": "http://localhost:4000",
-      "description": "NestJS DDD template using nestia + prisma"
+      "description": "NestJS기반 전자상거래 서비스"
     }
   ],
   "info": {
     "version": "1.0.0",
-    "title": "NestDDD - NestJS DDD template"
+    "title": "E-Commerce Server"
   },
   "paths": {
     "/sign-in/google": {
