@@ -1,0 +1,7 @@
+node_modules
+dist
+doc
+db
+!src/infrastructure/DB
+src/sdk/*
+!src/sdk/interface
