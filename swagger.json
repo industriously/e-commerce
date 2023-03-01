@@ -11,6 +11,163 @@
     "title": "E-Commerce Server"
   },
   "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "query로 전달된 페이지 정보, default 1",
+            "schema": {
+              "type": "number",
+              "nullable": false
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "페이지 정보와 함께 요청한 상품 목록",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_lt_ProductSchema.General_gt_"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "description": "상품 목록 요청 API",
+        "x-nestia-namespace": "products.getProductList",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "product",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "page",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "query로 전달된 페이지 정보, default 1",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "returns",
+            "text": [
+              {
+                "text": "페이지 정보와 함께 요청한 상품 목록",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "생성된 상품 정보",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSchema.Detail"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "description": "상품 정보 생성 API",
+        "x-nestia-namespace": "products.createProduct",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "product",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "returns",
+            "text": [
+              {
+                "text": "생성된 상품 정보",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "/products/{product_id}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSchema.Detail"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "description": "상품 상세 정보 요청 API",
+        "x-nestia-namespace": "products.getProduct",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "product",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "/sign-in/google": {
       "post": {
         "tags": [
@@ -257,6 +414,338 @@
   },
   "components": {
     "schemas": {
+      "PaginatedResponse_lt_ProductSchema.General_gt_": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductSchema.General",
+              "x-typia-required": true
+            },
+            "nullable": false,
+            "x-typia-required": true
+          },
+          "page": {
+            "type": "number",
+            "nullable": false,
+            "description": "now page",
+            "x-typia-metaTags": [
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          },
+          "total_count": {
+            "type": "number",
+            "nullable": false,
+            "description": "total count of T",
+            "x-typia-metaTags": [
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          }
+        },
+        "nullable": false,
+        "required": [
+          "data",
+          "page",
+          "total_count"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "ProductSchema.General": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "description": "상품명",
+            "x-typia-required": true
+          },
+          "store_id": {
+            "type": "string",
+            "nullable": false,
+            "description": "상품을 판매하는 판매점 id",
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "pattern": "uuid"
+          },
+          "price": {
+            "type": "number",
+            "nullable": false,
+            "description": "상품 가격(원)",
+            "x-typia-metaTags": [
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          }
+        },
+        "nullable": false,
+        "required": [
+          "id",
+          "name",
+          "store_id",
+          "price"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "ProductSchema.Detail": {
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "nullable": false,
+            "description": "ISO 8601 type",
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "pattern": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+          },
+          "updated_at": {
+            "type": "string",
+            "nullable": false,
+            "description": "ISO 8601 type",
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "pattern": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+          },
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "description": "상품명",
+            "x-typia-required": true
+          },
+          "store_id": {
+            "type": "string",
+            "nullable": false,
+            "description": "상품을 판매하는 판매점 id",
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "pattern": "uuid"
+          },
+          "price": {
+            "type": "number",
+            "nullable": false,
+            "description": "상품 가격(원)",
+            "x-typia-metaTags": [
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          },
+          "quantity": {
+            "type": "number",
+            "nullable": false,
+            "description": "현재 판매가능한 상품 수량",
+            "x-typia-metaTags": [
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          },
+          "description": {
+            "type": "string",
+            "nullable": false,
+            "description": "상품 설명",
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "store_id",
+          "price",
+          "quantity",
+          "description"
+        ],
+        "description": "판매자만 보이는 정보 등을 제거한 상품 상세 정보",
+        "x-typia-jsDocTags": []
+      },
       "IAuthUsecase.SignInResponse": {
         "type": "object",
         "properties": {
@@ -556,6 +1045,18 @@
         "nullable": false,
         "x-typia-jsDocTags": []
       }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ]
 }

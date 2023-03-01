@@ -28,6 +28,7 @@ const config: Config = {
     '@ACCOUNT/(.*)$': '<rootDir>/src/api/account/$1',
     '@TOKEN': '<rootDir>/src/api/token',
     '@USER/(.*)$': '<rootDir>/src/api/user/$1',
+    '@PRODUCT/(.*)$': '<rootDir>/src/api/product/$1',
   },
   collectCoverageFrom: ['src/**/*.ts'],
   coveragePathIgnorePatterns: [

@@ -9,6 +9,7 @@ import type { IConnection } from "@nestia/fetcher";
 import typia from "typia";
 
 import type { UserSchema } from "./../../interface/user/user.schema.interface";
+import type { IUserUsecase } from "./../../interface/user/user.usecase.interface";
 
 /**
  * @tag user
@@ -95,7 +96,7 @@ export namespace getPublicProfile
 export function updateProfile
     (
         connection: IConnection,
-        body: Partial<Pick<UserSchema.Aggregate, "username" | "address" | "phone">>
+        body: IUserUsecase.UpdateData
     ): Promise<void>
 {
     return Fetcher.fetch
@@ -110,7 +111,7 @@ export function updateProfile
 }
 export namespace updateProfile
 {
-    export type Input = Partial<Pick<UserSchema.Aggregate, "username" | "address" | "phone">>;
+    export type Input = IUserUsecase.UpdateData;
 
     export const METHOD = "PATCH" as const;
     export const PATH: string = "/user";

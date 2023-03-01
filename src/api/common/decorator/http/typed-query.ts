@@ -58,7 +58,7 @@ const castTo = (err: unknown) => ({
     if (!UUID_PATTERN.test(val)) {
       throw err;
     }
-    throw err;
+    return val;
   },
   string(val: string): string {
     return val;
@@ -72,6 +72,7 @@ export const query_typecast = (
 ) => {
   const { type = 'string', array = false, optional = false } = options ?? {};
   const value = context.switchToHttp().getRequest<Request>().query[key];
+
   if (!isString(value) && !isStringArray(value) && Nullish.isNot(value)) {
     throw HttpExceptionFactory('BadRequest', `invalid value of query ${key}`);
   }
@@ -102,9 +103,7 @@ export const query_typecast = (
     }
     return value.map(type_cast);
   }
-
   const casted = type_cast(value);
-
   return array ? [casted] : casted;
 };
 
@@ -130,12 +129,16 @@ export const TypedQuery = (
 ): ParameterDecorator => {
   return (target, propertyKey, index) => {
     const args =
-      Reflect.getMetadata(ROUTE_ARGS_METADATA, target.constructor, key) || {};
+      Reflect.getMetadata(
+        ROUTE_ARGS_METADATA,
+        target.constructor,
+        propertyKey,
+      ) || {};
     Reflect.defineMetadata(
       ROUTE_ARGS_METADATA,
       {
         ...assignMetadata(args, 4, index),
-        [`${'query'}${CUSTOM_ROUTE_ARGS_METADATA}:${index}`]: {
+        [`query${CUSTOM_ROUTE_ARGS_METADATA}:${index}`]: {
           index,
           factory: (_: unknown, ctx: ExecutionContext) =>
             query_typecast(key, ctx, options),
