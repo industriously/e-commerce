@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for util/list.ts</title>
+    <title>Code coverage report for util/provider.builder.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">util</a> list.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">util</a> provider.builder.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.29% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/17</span>
+                <span class='fraction'>15/15</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/16</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -96,17 +96,11 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -115,53 +109,62 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export namespace List {
-  export const map =
-<span class="fstat-no" title="function not covered" >    &lt;T, R&gt;(i</span>ter: (_: T) =&gt; R) =&gt;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    (i</span>nput: T[]) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      return input.map(iter);</span>
-    };
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { FunctionType } from '@INTERFACE/common';
 &nbsp;
-  export const each =
-<span class="fstat-no" title="function not covered" >    &lt;T&gt;(i</span>ter: (input: T) =&gt; void) =&gt;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    (i</span>nput: T[]) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      input.forEach(iter);</span>
-&nbsp;
-  interface Filter {
-    &lt;T, S extends T&gt;(predi: (item: T | S) =&gt; item is S): (input: T[]) =&gt; S[];
-    &lt;T&gt;(predi: (_: T) =&gt; boolean): (input: T[]) =&gt; T[];
-  }
-&nbsp;
-  export const filter: Filter =
-<span class="fstat-no" title="function not covered" >    &lt;T, S extends T = T&gt;(p</span>redicate: (item: T) =&gt; boolean) =&gt;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    (i</span>nput: T[]) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      input.filter(predicate) as S[];</span>
-&nbsp;
-  export const isEmpty = <span class="fstat-no" title="function not covered" >&lt;T&gt;(l</span>ist: T[]): boolean =&gt; <span class="cstat-no" title="statement not covered" >list.length === 0;</span>
-&nbsp;
-  export const throwIfEmpty =
-<span class="fstat-no" title="function not covered" >    (e</span>rr: unknown) =&gt;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    &lt;T&gt;(l</span>ist: T[]): T[] =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (isEmpty(list)) {</span>
-<span class="cstat-no" title="statement not covered" >        throw err;</span>
-      }
-<span class="cstat-no" title="statement not covered" >      return list;</span>
-    };
+export interface ProviderBuilder&lt;T extends object&gt; {
+  readonly build: () =&gt; T;
+  readonly mark: (
+    propertyKey: keyof T,
+    marker: (target: FunctionType) =&gt; void,
+  ) =&gt; ProviderBuilder&lt;T&gt;;
 }
+&nbsp;
+export const ProviderBuilder = &lt;T extends object&gt;(
+  props: T,
+): ProviderBuilder&lt;T&gt; =&gt; {
+  const builder = {
+    build: <span class="fstat-no" title="function not covered" >() =</span>&gt; {},
+    mark: <span class="fstat-no" title="function not covered" >() =</span>&gt; {},
+  } as unknown as ProviderBuilder&lt;T&gt;;
+&nbsp;
+  const build: ProviderBuilder&lt;T&gt;['build'] = () =&gt;
+    Object.setPrototypeOf({}, props);
+&nbsp;
+  const mark: ProviderBuilder&lt;T&gt;['mark'] = (key, marker) =&gt; {
+    const target = props[key];
+    const isFunction = (input: unknown): input is FunctionType =&gt;
+      typeof input === 'function';
+    if (isFunction(target)) {
+      marker(target);
+    }
+    return builder;
+  };
+  (builder as any).build = build;
+  (builder as any).mark = mark;
+  return builder;
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
