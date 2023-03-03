@@ -26,7 +26,7 @@ import type { ProductSchema } from "./../../interface/product/product.schema.int
 export function getProductList
     (
         connection: IConnection,
-        page: number | undefined
+        page?: number | undefined
     ): Promise<getProductList.Output>
 {
     return Fetcher.fetch
@@ -39,7 +39,6 @@ export function getProductList
 }
 export namespace getProductList
 {
-    export type Query = number | undefined;
     export type Output = PaginatedResponse<ProductSchema.General>;
 
     export const METHOD = "GET" as const;
@@ -51,7 +50,10 @@ export namespace getProductList
 
     export function path(page: number | undefined): string
     {
-        return `/products?${new URLSearchParams(page as any).toString()}`;
+        return `/products?${new URLSearchParams(
+        {
+            page
+        } as any).toString()}`;
     }
 }
 

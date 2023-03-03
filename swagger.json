@@ -25,7 +25,7 @@
               "type": "number",
               "nullable": false
             },
-            "required": true
+            "required": false
           }
         ],
         "responses": {
@@ -289,7 +289,7 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "",
+        "description": "내 프로필 보기 API",
         "x-nestia-namespace": "user.getProfile",
         "x-nestia-jsDocTags": [
           {
@@ -326,7 +326,7 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "",
+        "description": "내 정보 수정 API",
         "x-nestia-namespace": "user.updateProfile",
         "x-nestia-jsDocTags": [
           {
@@ -351,7 +351,7 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "",
+        "description": "내 계정 삭제 API",
         "x-nestia-namespace": "user.inActivate",
         "x-nestia-jsDocTags": [
           {
@@ -366,7 +366,7 @@
         ]
       }
     },
-    "/user/{user_id}": {
+    "/users/{user_id}": {
       "get": {
         "tags": [
           "user"
@@ -396,8 +396,8 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "",
-        "x-nestia-namespace": "user.getPublicProfile",
+        "description": "사용자 프로필 조회 API",
+        "x-nestia-namespace": "users.getPulicProfile",
         "x-nestia-jsDocTags": [
           {
             "name": "tag",
@@ -942,6 +942,46 @@
         ],
         "x-typia-jsDocTags": []
       },
+      "IUserUsecase.UpdateData": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-required": false
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "x-typia-required": false
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true,
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "^010-[0-9]{4}-[0-9]{4}$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^010-[0-9]{4}-[0-9]{4}$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": false,
+            "pattern": "^010-[0-9]{4}-[0-9]{4}$"
+          }
+        },
+        "nullable": false,
+        "x-typia-jsDocTags": []
+      },
       "UserSchema.Public": {
         "type": "object",
         "properties": {
@@ -1003,46 +1043,6 @@
           "email",
           "username"
         ],
-        "x-typia-jsDocTags": []
-      },
-      "IUserUsecase.UpdateData": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "nullable": false,
-            "x-typia-required": false
-          },
-          "address": {
-            "type": "string",
-            "nullable": true,
-            "x-typia-required": false
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true,
-            "x-typia-metaTags": [
-              {
-                "kind": "pattern",
-                "value": "^010-[0-9]{4}-[0-9]{4}$"
-              }
-            ],
-            "x-typia-jsDocTags": [
-              {
-                "name": "pattern",
-                "text": [
-                  {
-                    "text": "^010-[0-9]{4}-[0-9]{4}$",
-                    "kind": "text"
-                  }
-                ]
-              }
-            ],
-            "x-typia-required": false,
-            "pattern": "^010-[0-9]{4}-[0-9]{4}$"
-          }
-        },
-        "nullable": false,
         "x-typia-jsDocTags": []
       }
     },

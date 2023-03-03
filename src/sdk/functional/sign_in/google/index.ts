@@ -33,7 +33,6 @@ export function signInTestCb
 }
 export namespace signInTestCb
 {
-    export type Query = string;
     export type Output = string;
 
     export const METHOD = "GET" as const;
@@ -45,7 +44,10 @@ export namespace signInTestCb
 
     export function path(code: string): string
     {
-        return `/sign-in/google?${new URLSearchParams(code as any).toString()}`;
+        return `/sign-in/google?${new URLSearchParams(
+        {
+            code
+        } as any).toString()}`;
     }
 }
 

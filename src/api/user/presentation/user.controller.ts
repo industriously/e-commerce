@@ -1,6 +1,5 @@
 import { Authorization } from '@COMMON/decorator/http';
 import { IUserUsecase, UserSchema } from '@INTERFACE/user';
-import { TypedParam } from '@nestia/core';
 import { Body, Controller, Delete, Get, Inject, Patch } from '@nestjs/common';
 import { UserUsecaseToken } from '@USER/_constants_';
 import typia from 'typia';
@@ -12,6 +11,7 @@ export class UserController {
   ) {}
 
   /**
+   * 내 프로필 보기 API
    * @tag user
    */
   @Get()
@@ -22,16 +22,7 @@ export class UserController {
   }
 
   /**
-   * @tag user
-   */
-  @Get(':user_id')
-  getPublicProfile(
-    @TypedParam('user_id', 'uuid') id: string,
-  ): Promise<UserSchema.Public> {
-    return this.userUsecase.getPublic(id);
-  }
-
-  /**
+   * 내 정보 수정 API
    * @tag user
    */
   @Patch()
@@ -44,6 +35,7 @@ export class UserController {
   }
 
   /**
+   * 내 계정 삭제 API
    * @tag user
    */
   @Delete()
