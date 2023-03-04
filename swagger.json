@@ -208,6 +208,18 @@
           "authentication"
         ],
         "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
         "responses": {
           "201": {
             "description": "",
@@ -242,6 +254,18 @@
           "authentication"
         ],
         "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
         "responses": {
           "200": {
             "description": "",
@@ -770,6 +794,21 @@
           "access_token",
           "refresh_token",
           "id_token"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "IAuthUsecase.SignInBody": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "code"
         ],
         "x-typia-jsDocTags": []
       },
