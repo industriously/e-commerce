@@ -1,4 +1,4 @@
-import { ExceptionResponse } from '@INTERFACE/common';
+import { HttpExceptionMessage } from '@COMMON/exception';
 import { UserSchema } from '@INTERFACE/user';
 import { IConnection } from '@nestia/fetcher';
 import { HttpStatus } from '@nestjs/common';
@@ -19,23 +19,15 @@ export namespace getPublic {
 
   export const test_user_not_found = (connection: IConnection) =>
     test_error(api(connection))((err) => {
-      const received = typia.assertParse<ExceptionResponse>(err.message);
-
       expect(err.status).toBe(HttpStatus.NOT_FOUND);
-      expect(received).toEqual<ExceptionResponse>({
-        statusCode: HttpStatus.NOT_FOUND,
-        message: '일치하는 대상을 찾지 못했습니다.',
-      });
+      expect(err.message).toEqual(HttpExceptionMessage.NF);
     });
 
   export const test_invalid_params = (connection: IConnection) =>
     test_error(api(connection))((err) => {
-      const received = typia.assertParse<ExceptionResponse>(err.message);
-
       expect(err.status).toBe(HttpStatus.BAD_REQUEST);
-      expect(received).toEqual<ExceptionResponse>({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Value of the URL parameter "user_id" is not a valid UUID.',
-      });
+      expect(err.message).toEqual(
+        'Value of the URL parameter "user_id" is not a valid UUID.',
+      );
     });
 }

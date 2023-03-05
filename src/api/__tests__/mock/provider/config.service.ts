@@ -13,7 +13,6 @@ export const config: ConfigService<IEnv, true> = {
       case 'PORT':
         return '3000';
     }
-
     return 'test_env';
   },
 } as any;
