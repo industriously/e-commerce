@@ -1,11 +1,9 @@
 import type { Config } from 'jest';
 
 const config: Config = {
-  verbose: true,
   coverageDirectory: '<rootDir>/coverage',
   testEnvironment: 'node',
   testEnvironmentOptions: { NODE_ENV: 'test' },
-  setupFiles: ['dotenv/config'],
   testMatch: ['**/__tests__/**/*.(spec|test).ts'],
   transform: {
     '^.+\\.ts$': [
