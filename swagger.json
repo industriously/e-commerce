@@ -41,8 +41,8 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "상품 목록 요청 API",
-        "x-nestia-namespace": "products.getProductList",
+        "description": "상품 목록 조회 API\n\n전체 상품 목록 조회\n\n추후에 쿼리를 통해 가게별, 카테고리별 등의 필터링 기준 추가\n\n추후에 쿼리를 통해 가격 낮은 순/높은 순, 인기 순 등의 정렬 기준 추가",
+        "x-nestia-namespace": "products.getList",
         "x-nestia-jsDocTags": [
           {
             "name": "tag",
@@ -86,6 +86,18 @@
           "product"
         ],
         "parameters": [],
+        "requestBody": {
+          "description": "상품 생성 정보",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/object"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
         "responses": {
           "201": {
             "description": "생성된 상품 정보",
@@ -99,14 +111,31 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "상품 정보 생성 API",
-        "x-nestia-namespace": "products.createProduct",
+        "description": "상품 생성 요청 API\n\nbody에 포함된 store_id에 해당하는 가게에 등록된 사용자만 요청할 수 있다.",
+        "x-nestia-namespace": "products.create",
         "x-nestia-jsDocTags": [
           {
             "name": "tag",
             "text": [
               {
                 "text": "product",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "body",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "상품 생성 정보",
                 "kind": "text"
               }
             ]
@@ -132,7 +161,7 @@
           {
             "name": "product_id",
             "in": "path",
-            "description": "",
+            "description": "상품 id",
             "schema": {
               "type": "string",
               "nullable": false
@@ -142,7 +171,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "상품 상세 정보",
             "content": {
               "application/json": {
                 "schema": {
@@ -153,14 +182,220 @@
             "x-nestia-encrypted": false
           }
         },
-        "description": "상품 상세 정보 요청 API",
-        "x-nestia-namespace": "products.getProduct",
+        "description": "상품 상세 조회 API",
+        "x-nestia-namespace": "products.get",
         "x-nestia-jsDocTags": [
           {
             "name": "tag",
             "text": [
               {
                 "text": "product",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "product_id",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "상품 id",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "returns",
+            "text": [
+              {
+                "text": "상품 상세 정보",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "변경할 상품 id",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "변경된 상품 정보",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/object"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "변경된 상품의 상세 정보",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSchema.Detail"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "description": "상품 수정 요청 API",
+        "x-nestia-namespace": "products.update",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "product",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "product_id",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "변경할 상품 id",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "body",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "변경된 상품 정보",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "returns",
+            "text": [
+              {
+                "text": "변경된 상품의 상세 정보",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "삭제 대상 상품의 id",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "삭제 대상 상품이 포함된 store의 id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/object"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "x-nestia-encrypted": false
+          }
+        },
+        "description": "상품 삭제(비활성화) 요청 API",
+        "x-nestia-namespace": "products.inActivate",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "product",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "product_id",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "삭제 대상 상품의 id",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "body",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "삭제 대상 상품이 포함된 store의 id",
                 "kind": "text"
               }
             ]
@@ -768,6 +1003,12 @@
           "description"
         ],
         "description": "판매자만 보이는 정보 등을 제거한 상품 상세 정보",
+        "x-typia-jsDocTags": []
+      },
+      "object": {
+        "type": "object",
+        "properties": {},
+        "nullable": false,
         "x-typia-jsDocTags": []
       },
       "IAuthUsecase.SignInBody": {

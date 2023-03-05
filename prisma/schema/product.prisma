@@ -1,0 +1,15 @@
+model Product {
+  /// @format uuid
+  id          String   @id @default(uuid())
+  name        String
+  /// relation with store
+  store_id    String
+  description String
+  price       Int
+  quantity    Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  is_deleted  Boolean  @default(false)
+
+  @@map("products")
+}
