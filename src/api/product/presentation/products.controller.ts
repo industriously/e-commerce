@@ -1,12 +1,18 @@
 import { TypedQuery } from '@COMMON/decorator/http';
+import { HttpExceptionFactory } from '@COMMON/exception';
 import { PaginatedResponse } from '@INTERFACE/common';
 import { IProductUsecase, ProductSchema } from '@INTERFACE/product';
 import { TypedBody, TypedParam } from '@nestia/core';
-import { Controller, Get, Patch, Post, Delete } from '@nestjs/common';
+import { Controller, Get, Patch, Post, Delete, Inject } from '@nestjs/common';
+import { ProductUsecaseToken } from '@PRODUCT/_constants_';
+import typia from 'typia';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productUsecase: IProductUsecase) {}
+  constructor(
+    @Inject(ProductUsecaseToken)
+    private readonly productUsecase: IProductUsecase,
+  ) {}
 
   /**
    * 상품 목록 조회 API
@@ -22,10 +28,25 @@ export class ProductsController {
    * @returns 페이지 정보와 함께 요청한 상품 목록
    */
   @Get()
-  getList(
+  findMany(
     @TypedQuery('page', { type: 'number', optional: true }) page?: number,
   ): Promise<PaginatedResponse<ProductSchema.General>> {
-    return this.productUsecase.findMany(page);
+    const _page = page ?? 1;
+    const isValidPage = typia.is<Pick<PaginatedResponse<any>, 'page'>>({
+      page: _page,
+    });
+    if (!isValidPage) {
+      throw HttpExceptionFactory(
+        'BadRequest',
+        "Value of the URL query 'page' is invalid.",
+      );
+    }
+    return this.productUsecase.findMany(_page);
+  }
+
+  @Get('total-count')
+  getTotalCount(): number {
+    return 10;
   }
   /**
    * 상품 상세 조회 API
@@ -35,7 +56,7 @@ export class ProductsController {
    * @returns 상품 상세 정보
    */
   @Get(':product_id')
-  get(
+  find(
     @TypedParam('product_id', 'uuid') product_id: string,
   ): Promise<ProductSchema.Detail> {
     return this.productUsecase.findOne(product_id);

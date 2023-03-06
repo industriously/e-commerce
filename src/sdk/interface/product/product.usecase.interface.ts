@@ -16,7 +16,7 @@ export namespace IProductUsecase {
 export interface IProductUsecase {
   readonly findOne: (product_id: string) => Promise<ProductSchema.Detail>;
   readonly findMany: (
-    page?: number,
+    page: number,
   ) => Promise<PaginatedResponse<ProductSchema.General>>;
   readonly create: (
     data: IProductUsecase.CreateData,
