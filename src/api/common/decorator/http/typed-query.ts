@@ -1,42 +1,32 @@
-import { assignMetadata, ExecutionContext } from '@nestjs/common';
-import { Nullish } from '@UTIL';
-import type { Request } from 'express';
 import { HttpExceptionFactory } from '@COMMON/exception';
+import {
+  assignMetadata,
+  ExecutionContext,
+  HttpException,
+} from '@nestjs/common';
 import {
   CUSTOM_ROUTE_ARGS_METADATA,
   ROUTE_ARGS_METADATA,
 } from '@nestjs/common/constants';
+import { List } from '@UTIL';
+import { Request } from 'express';
 
-type QueryType = 'boolean' | 'number' | 'string' | 'uuid';
-
-interface TypedQueryOptions {
-  /**
-   * QueryType : 'boolean' | 'number' | 'string' | 'uuid'
-   */
-  type?: QueryType;
-  /**
-   * If multiple is true, query value is array. default is false.
-   */
+interface QueryTypeOptions {
+  type?: 'string' | 'boolean' | 'number';
   array?: boolean;
-  /**
-   * If nullable is true, query value can null or undefined, default is false.
-   */
-  optional?: boolean;
+  // defaultValue?: T 나중에 typia에서 atomic type에 대해 comment tag를 지원하면 적용 가능
 }
 
-const UUID_PATTERN =
-  /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i;
+const isString = (input: unknown): input is string => typeof input === 'string';
 
-const isString = (input: unknown): input is string => {
-  return typeof input === 'string';
-};
+const isUndefined = (input: unknown): input is undefined => input === undefined;
 
 const isStringArray = (input: unknown): input is string[] =>
   Array.isArray(input) && input.every(isString);
 
-const castTo = (err: unknown) => ({
-  boolean(val: string): boolean {
-    switch (val.toLowerCase()) {
+const cast = (err: HttpException) => ({
+  boolean(value: string): boolean {
+    switch (value.toLowerCase()) {
       case 'true':
       case '1':
         return true;
@@ -47,85 +37,61 @@ const castTo = (err: unknown) => ({
         throw err;
     }
   },
-  number(val: string): number {
-    const num = Number(val);
-    if (isNaN(num) || val == '') {
+  number(value: string): number {
+    const num = Number(value);
+    if (isNaN(num) || value === '') {
       throw err;
     }
     return num;
   },
-  uuid(val: string): string {
-    if (!UUID_PATTERN.test(val)) {
-      throw err;
-    }
-    return val;
-  },
-  string(val: string): string {
-    return val;
+  string(value: string): string {
+    return value;
   },
 });
 
-export const query_typecast = (
+const validator = <T>(
   key: string,
-  context: ExecutionContext,
-  options?: TypedQueryOptions,
+  value: unknown,
+  is: (input: unknown) => input is T,
+  exception: HttpException,
 ) => {
-  const { type = 'string', array = false, optional = false } = options ?? {};
-  const value = context.switchToHttp().getRequest<Request>().query[key];
-
-  if (!isString(value) && !isStringArray(value) && Nullish.isNot(value)) {
-    throw HttpExceptionFactory('BadRequest', `invalid value of query ${key}`);
+  if (!is({ [key]: value })) {
+    throw exception;
   }
-
-  const type_cast: (val: string) => boolean | number | string = castTo(
-    HttpExceptionFactory(
-      'BadRequest',
-      `Value of the URL query '${key}' is not a ${type}.`,
-    ),
-  )[type];
-
-  if (Nullish.is(value)) {
-    if (!optional) {
-      throw HttpExceptionFactory(
-        'BadRequest',
-        `Value of the URL query '${key}' is required.`,
-      );
-    }
-    return undefined; // 사용될 때, null이 아니라 optional값으로 사용 따라서 undefined
-  }
-
-  if (Array.isArray(value)) {
-    if (!array) {
-      throw HttpExceptionFactory(
-        'BadRequest',
-        `Value of the URL query '${key}' should be single.`,
-      );
-    }
-    return value.map(type_cast);
-  }
-  const casted = type_cast(value);
-  return array ? [casted] : casted;
+  return value;
 };
 
-/**
- * URL parameter decorator with type.
- *
- * `TypedQuery` is a decorator function getting specific typed query from the HTTP
- * request URL.
- *
- * @param key URL Query name
- * @param options query type option
- *
- * * type - 'boolean' | 'number' | 'string' | 'string' | 'uuid', default is string
- * * multiple - If multiple is true, query value is array type, default is false.
- * * nullale - If nullable is true, query value can be undefined, default is false.
- * @returns Parameter decorator
- *
- * @author jiwon ro - https://github.com/rojiwon0325
- */
-export const TypedQuery = (
+const query_type_cast =
+  <T>(key: string, ctx: ExecutionContext, options?: QueryTypeOptions) =>
+  (is: (input: unknown) => input is T) => {
+    const { type = 'string', array = false } = options ?? {};
+    const value = ctx.switchToHttp().getRequest<Request>().query[key];
+    const exception = HttpExceptionFactory(
+      'BadRequest',
+      `Value of the URL query '${key}' is invalid.`,
+    );
+    const _validator = (input: unknown) => validator(key, input, is, exception);
+    const type_cast: (input: string) => boolean | number | string =
+      cast(exception)[type];
+
+    if (isStringArray(value) && array) {
+      return _validator(List.map(type_cast)(value));
+    }
+    if (isString(value)) {
+      const casted =
+        value === '' || value === 'undefined' ? undefined : type_cast(value);
+      return _validator(array ? [casted] : casted);
+    }
+    if (isUndefined(value)) {
+      return _validator(array ? [] : undefined);
+    }
+    throw exception;
+  };
+
+export const TypedQuery = <T>(
   key: string,
-  options?: TypedQueryOptions,
+  is: (input: unknown) => input is T,
+  options?: QueryTypeOptions,
 ): ParameterDecorator => {
   return (target, propertyKey, index) => {
     const args =
@@ -137,11 +103,11 @@ export const TypedQuery = (
     Reflect.defineMetadata(
       ROUTE_ARGS_METADATA,
       {
-        ...assignMetadata(args, 4, index, key),
+        ...assignMetadata(args, 4, index, key), // 4 is QUERY
         [`query${CUSTOM_ROUTE_ARGS_METADATA}:${index}`]: {
           index,
           factory: (_: unknown, ctx: ExecutionContext) =>
-            query_typecast(key, ctx, options),
+            query_type_cast(key, ctx, options)(is),
         },
       },
       target.constructor,

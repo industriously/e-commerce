@@ -1,6 +1,5 @@
 import { TypedQuery } from '@COMMON/decorator/http';
-import { HttpExceptionFactory } from '@COMMON/exception';
-import { PaginatedResponse } from '@INTERFACE/common';
+import { Page, PaginatedResponse } from '@INTERFACE/common';
 import { IProductUsecase, ProductSchema } from '@INTERFACE/product';
 import { TypedBody, TypedParam } from '@nestia/core';
 import { Controller, Get, Patch, Post, Delete, Inject } from '@nestjs/common';
@@ -29,19 +28,10 @@ export class ProductsController {
    */
   @Get()
   findMany(
-    @TypedQuery('page', { type: 'number', optional: true }) page?: number,
+    @TypedQuery('page', typia.createIs<Page>(), { type: 'number' })
+    page?: number,
   ): Promise<PaginatedResponse<ProductSchema.General>> {
-    const _page = page ?? 1;
-    const isValidPage = typia.is<Pick<PaginatedResponse<any>, 'page'>>({
-      page: _page,
-    });
-    if (!isValidPage) {
-      throw HttpExceptionFactory(
-        'BadRequest',
-        "Value of the URL query 'page' is invalid.",
-      );
-    }
-    return this.productUsecase.findMany(_page);
+    return this.productUsecase.findMany(page ?? 1);
   }
 
   @Get('total-count')

@@ -20,7 +20,7 @@ export namespace TestProduct {
   };
 
   export const test_find_many = (connection: IConnection) => () => {
-    //nestia bug  it('If query is empty', () => findMany.test_success(connection)());
+    it('If query is empty', () => findMany.test_success(connection)());
 
     it.each([-1, 0, 0.5, 1.2, 1.3, 4.2])(
       'If query is not int or not more than 0',

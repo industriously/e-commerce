@@ -4,6 +4,7 @@ import { GithubGuard, GoogleGuard, OauthProfile } from '@USER/_auth_';
 import { AuthUsecaseToken } from '@USER/_constants_';
 import { Authorization, TypedQuery } from '@COMMON/decorator/http';
 import { TypedBody } from '@nestia/core';
+import typia from 'typia';
 
 @Controller()
 export class AuthController {
@@ -26,7 +27,9 @@ export class AuthController {
    * @internal
    */
   @Get('sign-in/google')
-  signInTestCb(@TypedQuery('code') code: string) {
+  signInTestCb(
+    @TypedQuery('code', typia.createIs<{ code: string }>()) code: string,
+  ) {
     return code;
   }
 
