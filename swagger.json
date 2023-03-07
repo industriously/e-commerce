@@ -408,7 +408,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
+                "$ref": "#/components/schemas/Record_lt_string_comma__space_never_gt_"
               }
             }
           },
@@ -449,18 +449,6 @@
           "authentication"
         ],
         "parameters": [],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
-              }
-            }
-          },
-          "required": true,
-          "x-nestia-encrypted": false
-        },
         "responses": {
           "201": {
             "description": "",
@@ -1159,19 +1147,10 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IAuthUsecase.SignInBody": {
+      "Record_lt_string_comma__space_never_gt_": {
         "type": "object",
-        "properties": {
-          "code": {
-            "type": "string",
-            "nullable": false,
-            "x-typia-required": true
-          }
-        },
+        "properties": {},
         "nullable": false,
-        "required": [
-          "code"
-        ],
         "x-typia-jsDocTags": []
       },
       "IAuthUsecase.SignInResponse": {

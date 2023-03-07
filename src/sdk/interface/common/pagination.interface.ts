@@ -1,6 +1,9 @@
 export interface PaginatedResponse<T> extends Page {
   data: T[];
 
+  /**
+   * now page
+   */
   page: number;
 }
 

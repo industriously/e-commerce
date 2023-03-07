@@ -109,6 +109,8 @@ describe('TypedQuery decorator Test', () => {
 
     describe('uuid', () => {
       it.each([
+        'a807549c-bc4a-11ed-afa1-0242ac120002', // uuid v1
+        'b24c7054-bc4a-11ed-afa1-0242ac120002', // uuid v1
         '24098298-1c36-416a-ab99-4e638e7ffd23', // uuid v4
         'd66b1d9d-b9de-4fe8-9900-b6e0c4254f77', // uuid v4
       ])('success', (query) => {
@@ -118,11 +120,7 @@ describe('TypedQuery decorator Test', () => {
           .expect(query);
       });
 
-      it.each([
-        'a807549c-bc4a-11ed-afa1-0242ac120002', // uuid v1
-        'b24c7054-bc4a-11ed-afa1-0242ac120002', // uuid v1
-        'string',
-      ])('fail', (query) => {
+      it.each(['string'])('fail', (query) => {
         return supertest(app.getHttpServer())
           .get(`/uuid?query=${query}`)
           .expect(HttpStatus.BAD_REQUEST)

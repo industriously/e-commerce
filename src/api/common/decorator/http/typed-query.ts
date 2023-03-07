@@ -78,8 +78,8 @@ const query_type_cast =
       return _validator(List.map(type_cast)(value));
     }
     if (isString(value)) {
-      const casted =
-        value === '' || value === 'undefined' ? undefined : type_cast(value);
+      if (value === 'undefined') console.log('check');
+      const casted = value === '' ? undefined : type_cast(value);
       return _validator(array ? [casted] : casted);
     }
     if (isUndefined(value)) {

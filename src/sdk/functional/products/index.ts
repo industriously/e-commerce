@@ -59,10 +59,11 @@ export namespace findMany
 
     export function path(page: number | undefined): string
     {
-        return `/products?${new URLSearchParams(
+        const variables: string = new URLSearchParams(
         {
             page
-        } as any).toString()}`;
+        } as any).toString()
+        return `/products${variables.length ? `?${variables}` : ""}`;
     }
 }
 
@@ -81,7 +82,9 @@ export namespace findMany
 export function find
     (
         connection: IConnection,
-        product_id: string
+        product_id: string,
+        test: string,
+        page?: string | undefined
     ): Promise<find.Output>
 {
     return Fetcher.fetch
@@ -89,7 +92,7 @@ export function find
         connection,
         find.ENCRYPTED,
         find.METHOD,
-        find.path(product_id)
+        find.path(product_id, test, page)
     );
 }
 export namespace find
@@ -103,9 +106,14 @@ export namespace find
         response: false,
     };
 
-    export function path(product_id: string): string
+    export function path(product_id: string, test: string, page: string | undefined): string
     {
-        return `/products/${encodeURIComponent(product_id)}`;
+        const variables: string = new URLSearchParams(
+        {
+            test,
+            page
+        } as any).toString()
+        return `/products/${encodeURIComponent(product_id)}${variables.length ? `?${variables}` : ""}`;
     }
 }
 
