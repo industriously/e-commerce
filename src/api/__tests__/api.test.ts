@@ -94,5 +94,25 @@ describe('API Test', () => {
       'products.findMany - get product general info list',
       TestProduct.test_find_many(connection),
     );
+
+    describe(
+      'products.count.getCount - get active product list lenght',
+      TestProduct.test_count(connection),
+    );
+
+    describe(
+      'products.create - create new product',
+      TestProduct.test_create(connection),
+    );
+
+    describe(
+      'products.update - update product',
+      TestProduct.test_update(connection),
+    );
+
+    describe(
+      'product.inAcitvate - inActivate product',
+      TestProduct.test_in_active(connection),
+    );
   });
 });

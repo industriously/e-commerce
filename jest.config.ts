@@ -15,7 +15,6 @@ const config: Config = {
       },
     ],
   },
-  restoreMocks: true,
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
     '@toss/nestjs-aop': '<rootDir>/src/infrastructure/aop',

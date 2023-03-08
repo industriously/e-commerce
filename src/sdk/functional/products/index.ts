@@ -12,7 +12,7 @@ import type { PaginatedResponse } from "./../../interface/common/pagination.inte
 import type { ProductSchema } from "./../../interface/product/product.schema.interface";
 import type { IProductUsecase } from "./../../interface/product/product.usecase.interface";
 
-export * as total_count from "./total_count";
+export * as count from "./count";
 
 /**
  * 상품 목록 조회 API
@@ -59,11 +59,14 @@ export namespace findMany
 
     export function path(page: number | undefined): string
     {
-        const variables: string = new URLSearchParams(
+        const variables: Record<any, any> = 
         {
             page
-        } as any).toString()
-        return `/products${variables.length ? `?${variables}` : ""}`;
+        } as any;
+        for (const [key, value] of Object.entries(variables))
+            if (value === undefined) delete variables[key];
+        const encoded: string = new URLSearchParams(variables).toString();
+        return `/products${encoded.length ? `?${encoded}` : ""}`;;
     }
 }
 
@@ -82,9 +85,7 @@ export namespace findMany
 export function find
     (
         connection: IConnection,
-        product_id: string,
-        test: string,
-        page?: string | undefined
+        product_id: string
     ): Promise<find.Output>
 {
     return Fetcher.fetch
@@ -92,7 +93,7 @@ export function find
         connection,
         find.ENCRYPTED,
         find.METHOD,
-        find.path(product_id, test, page)
+        find.path(product_id)
     );
 }
 export namespace find
@@ -106,14 +107,9 @@ export namespace find
         response: false,
     };
 
-    export function path(product_id: string, test: string, page: string | undefined): string
+    export function path(product_id: string): string
     {
-        const variables: string = new URLSearchParams(
-        {
-            test,
-            page
-        } as any).toString()
-        return `/products/${encodeURIComponent(product_id)}${variables.length ? `?${variables}` : ""}`;
+        return `/products/${encodeURIComponent(product_id)}`;
     }
 }
 

@@ -2,15 +2,7 @@ import { TypedQuery } from '@COMMON/decorator/http';
 import { Page, PaginatedResponse } from '@INTERFACE/common';
 import { IProductUsecase, ProductSchema } from '@INTERFACE/product';
 import { TypedBody, TypedParam } from '@nestia/core';
-import {
-  Controller,
-  Get,
-  Patch,
-  Post,
-  Delete,
-  Inject,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Patch, Post, Delete, Inject } from '@nestjs/common';
 import { ProductUsecaseToken } from '@PRODUCT/_constants_';
 import typia from 'typia';
 
@@ -42,9 +34,9 @@ export class ProductsController {
     return this.productUsecase.findMany(page ?? 1);
   }
 
-  @Get('total-count')
-  getTotalCount(): number {
-    return 10;
+  @Get('count')
+  getCount(): Promise<number> {
+    return this.productUsecase.getCount();
   }
   /**
    * 상품 상세 조회 API
@@ -56,8 +48,6 @@ export class ProductsController {
   @Get(':product_id')
   find(
     @TypedParam('product_id', 'uuid') product_id: string,
-    @Query('test') test: string,
-    @Query('page') page?: string,
   ): Promise<ProductSchema.Detail> {
     return this.productUsecase.findOne(product_id);
   }

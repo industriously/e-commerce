@@ -14,4 +14,7 @@ export const ProductRepository: IProductRepository = {
     const end = start + 10;
     return product_list.slice(start, end);
   },
+  async count() {
+    return product_list.filter(({ is_deleted }) => is_deleted === false).length;
+  },
 };

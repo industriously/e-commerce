@@ -12,6 +12,9 @@ export const ProductUsecaseFactory = (
   repository: IProductRepository,
 ): IProductUsecase => {
   return ProviderBuilder<IProductUsecase>({
+    getCount() {
+      return repository.count();
+    },
     findOne(product_id) {
       return pipeAsync(
         repository.findOne(),
@@ -39,7 +42,7 @@ export const ProductUsecaseFactory = (
     },
     async update(product_id, data) {
       return pipeAsync(
-        repository.findOne(),
+        repository.findOne(false),
 
         Nullish.throwIf(HttpExceptionFactory('NotFound')),
 

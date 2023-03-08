@@ -18,6 +18,7 @@ export interface IProductUsecase {
   readonly findMany: (
     page: number,
   ) => Promise<PaginatedResponse<ProductSchema.General>>;
+  readonly getCount: () => Promise<number>;
   readonly create: (
     data: IProductUsecase.CreateData,
   ) => Promise<ProductSchema.Detail>;

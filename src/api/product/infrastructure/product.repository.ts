@@ -10,6 +10,9 @@ export const ProductRepositoryFactory = (
 ): IProductRepository => {
   const product = () => client.get().product;
   return ProviderBuilder<IProductRepository>({
+    count() {
+      return product().count({ where: { is_deleted: false } });
+    },
     create(data) {
       return pipeAsync(
         typia.createAssertPrune<IProductRepository.CreateData>(),
