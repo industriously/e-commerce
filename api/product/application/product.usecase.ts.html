@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for api/user/application/user.usecase.ts</title>
+    <title>Code coverage report for api/product/application/product.usecase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">api/user/application</a> user.usecase.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">api/product/application</a> product.usecase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -39,7 +39,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -118,8 +118,16 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -128,13 +136,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">146x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -145,27 +150,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">112x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">120x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -173,58 +174,72 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { UserMapper } from '@USER/domain';
-import { ProviderBuilder, pipeAsync, Nullish } from '@UTIL';
-import { ITokenService, TokenSchema } from '@INTERFACE/token';
-import { IUserRepository, IUserUsecase } from '@INTERFACE/user';
-import { HttpExceptionFactory } from '@COMMON/exception';
-import { pipe } from 'rxjs';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { HttpExceptionFactory } from '@COMMON/exception';
+import { PaginatedResponse } from '@INTERFACE/common';
+import {
+  IProductRepository,
+  IProductUsecase,
+  ProductSchema,
+} from '@INTERFACE/product';
+import { ProductBusiness, ProductMapper } from '@PRODUCT/domain';
+import { List, Nullish, pipeAsync, ProviderBuilder } from '@UTIL';
 &nbsp;
-export const UserUsecaseFactory = (
-  repository: IUserRepository,
-  tokenService: ITokenService,
-): IUserUsecase =&gt; {
-  const get_id_from_token = () =&gt;
-    [
-      tokenService.getAccessTokenPayload,
-      ({ id }: TokenSchema.AccessTokenPayload) =&gt; id,
-    ] as const;
-  return ProviderBuilder&lt;IUserUsecase&gt;({
-    getPublic(id) {
+export const ProductUsecaseFactory = (
+  repository: IProductRepository,
+): IProductUsecase =&gt; {
+  return ProviderBuilder&lt;IProductUsecase&gt;({
+    getCount() {
+      return repository.count();
+    },
+    findOne(product_id) {
       return pipeAsync(
         repository.findOne(),
 &nbsp;
         Nullish.throwIf(HttpExceptionFactory('NotFound')),
 &nbsp;
-        UserMapper.toPublic,
-      )(id);
+        ProductMapper.toDetail,
+      )(product_id);
     },
-&nbsp;
-    getDetail(token) {
+    findMany(page) {
       return pipeAsync(
-        ...get_id_from_token(),
+        repository.findMany,
 &nbsp;
-        repository.findOne(),
+        List.map(ProductMapper.toGeneral),
+&nbsp;
+        (data): PaginatedResponse&lt;ProductSchema.General&gt; =&gt; ({
+          data,
+          page,
+        }),
+      )(page);
+    },
+    async create(data) {
+      const product = await repository.create(data);
+      return ProductMapper.toDetail(product);
+    },
+    async update(product_id, data) {
+      return pipeAsync(
+        repository.findOne(false),
 &nbsp;
         Nullish.throwIf(HttpExceptionFactory('NotFound')),
 &nbsp;
-        UserMapper.toDetail,
-      )(token);
+        ProductBusiness.update(data),
+&nbsp;
+        repository.save,
+&nbsp;
+        ProductMapper.toDetail,
+      )(product_id);
     },
-&nbsp;
-    update(token, data) {
-      return pipe(
-        ...get_id_from_token(),
-&nbsp;
-        repository.update(data),
-      )(token);
-    },
-    remove(token) {
-      return pipe(
-        ...get_id_from_token(),
-&nbsp;
-        repository.remove,
-      )(token);
+    inActivate(product_id) {
+      return repository.update({ is_deleted: true })(product_id);
     },
   }).build();
 };
