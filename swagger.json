@@ -152,7 +152,7 @@
         ]
       }
     },
-    "/products/total-count": {
+    "/products/count": {
       "get": {
         "tags": [],
         "parameters": [],
@@ -171,7 +171,7 @@
           }
         },
         "description": "",
-        "x-nestia-namespace": "products.total-count.getTotalCount",
+        "x-nestia-namespace": "products.count.getCount",
         "x-nestia-jsDocTags": []
       }
     },
@@ -408,7 +408,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Record_lt_string_comma__space_never_gt_"
+                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
               }
             }
           },
@@ -449,6 +449,18 @@
           "authentication"
         ],
         "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
         "responses": {
           "201": {
             "description": "",
@@ -938,16 +950,29 @@
             "x-typia-required": true
           },
           "quantity": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "현재 판매가능한 상품 수량",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
@@ -959,7 +984,8 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 0
           }
         },
         "nullable": false,
@@ -1040,16 +1066,29 @@
             "x-typia-required": true
           },
           "quantity": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "현재 판매가능한 상품 수량",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
@@ -1061,7 +1100,8 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 0
           }
         },
         "nullable": false,
@@ -1114,16 +1154,29 @@
             "x-typia-required": true
           },
           "quantity": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "현재 판매가능한 상품 수량",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
@@ -1135,7 +1188,8 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 0
           }
         },
         "nullable": false,
@@ -1147,10 +1201,19 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "Record_lt_string_comma__space_never_gt_": {
+      "IAuthUsecase.SignInBody": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-required": true
+          }
+        },
         "nullable": false,
+        "required": [
+          "code"
+        ],
         "x-typia-jsDocTags": []
       },
       "IAuthUsecase.SignInResponse": {
