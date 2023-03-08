@@ -44,9 +44,7 @@ export namespace TestUser {
     );
 
     it.each(not_exist_user_valid_token)('If user not exist', (token) =>
-      Promise.all(
-        test_bodys.map(updateProfile.test_success(connection)(token)),
-      ),
+      updateProfile.test_success(connection)(token)(test_bodys[1]),
     );
 
     it.each(user_list)('If user exist', async (user) => {

@@ -1,6 +1,5 @@
 import { IConnection } from '@nestia/fetcher';
 import { Test } from '@nestjs/testing';
-import { ApiModule } from 'src/api/api.module';
 import { FilterModule } from '@INFRA/filter/filter.module';
 import { ConfigModule } from '@INFRA/config/config.module';
 import { INestApplication } from '@nestjs/common';
@@ -8,11 +7,15 @@ import { UserRepositoryToken } from '@USER/_constants_';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AopModule } from '@toss/nestjs-aop';
-import { UserRepository } from './mock/repository';
+import { ProductRepository, UserRepository } from './mock/repository';
 import { config, jwtService } from './mock/provider';
 import { TestUsers } from '@USER/__tests__/users';
 import { TestUser } from '@USER/__tests__/user';
 import { TestAuth } from '@USER/__tests__/auth';
+import { UserModule } from '@USER/user.module';
+import { ProductModule } from '@PRODUCT/product.module';
+import { ProductRepositoryToken } from '@PRODUCT/_constants_';
+import { TestProduct } from '@PRODUCT/__tests__';
 
 describe('API Test', () => {
   const connection = {
@@ -23,8 +26,16 @@ describe('API Test', () => {
 
   beforeAll(async () => {
     const TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule, FilterModule, AopModule, ApiModule],
+      imports: [
+        ConfigModule,
+        FilterModule,
+        AopModule,
+        UserModule,
+        ProductModule,
+      ],
     })
+      .overrideProvider(ProductRepositoryToken)
+      .useValue(ProductRepository)
       .overrideProvider(UserRepositoryToken)
       .useValue(UserRepository)
       .overrideProvider(JwtService)
@@ -70,6 +81,38 @@ describe('API Test', () => {
     describe(
       'user.inActivate - remove user by access_token',
       TestUser.test_user_inactivate(connection),
+    );
+  });
+
+  describe('ProductUsecase', () => {
+    describe(
+      'products.find - get product detail info by product_id',
+      TestProduct.test_find(connection),
+    );
+
+    describe(
+      'products.findMany - get product general info list',
+      TestProduct.test_find_many(connection),
+    );
+
+    describe(
+      'products.count.getCount - get active product list lenght',
+      TestProduct.test_count(connection),
+    );
+
+    describe(
+      'products.create - create new product',
+      TestProduct.test_create(connection),
+    );
+
+    describe(
+      'products.update - update product',
+      TestProduct.test_update(connection),
+    );
+
+    describe(
+      'product.inAcitvate - inActivate product',
+      TestProduct.test_in_active(connection),
     );
   });
 });

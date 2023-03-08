@@ -1,13 +1,16 @@
-export interface PaginatedResponse<T> {
+export interface PaginatedResponse<T> extends Page {
   data: T[];
+
   /**
    * now page
-   * @minimum 0
    */
   page: number;
+}
+
+export interface Page {
   /**
-   * total count of T
-   * @minimum 0
+   * @type uint
+   * @minimum 1
    */
-  total_count: number;
+  page?: number;
 }

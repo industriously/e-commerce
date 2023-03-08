@@ -44,10 +44,14 @@ export namespace signInTestCb
 
     export function path(code: string): string
     {
-        return `/sign-in/google?${new URLSearchParams(
+        const variables: Record<any, any> = 
         {
             code
-        } as any).toString()}`;
+        } as any;
+        for (const [key, value] of Object.entries(variables))
+            if (value === undefined) delete variables[key];
+        const encoded: string = new URLSearchParams(variables).toString();
+        return `/sign-in/google${encoded.length ? `?${encoded}` : ""}`;;
     }
 }
 

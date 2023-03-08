@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import supertest from 'supertest';
-import { TypeGuardError } from 'typia';
+import typia, { TypeGuardError } from 'typia';
 import { AllExceptionFilter } from '../filter/all-exception.filter';
 import { LoggerModule } from '../logger/logger.module';
 import { LoggerServiceToken } from '@INFRA/logger';
@@ -79,8 +79,9 @@ class InfraTestController {
 
   @Get('typia')
   TestTypeGuardException(
-    @TypedQuery('expected', { optional: false }) expected: string,
-    @TypedQuery('path', { optional: true }) path?: string,
+    @TypedQuery('expected', typia.createIs<{ expected: string }>())
+    expected: string,
+    @TypedQuery('path', typia.createIs<{ path?: string }>()) path?: string,
   ) {
     throw new TypeGuardError({
       path,

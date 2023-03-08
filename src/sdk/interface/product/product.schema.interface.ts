@@ -20,6 +20,7 @@ export namespace ProductSchema {
     readonly price: number;
     /**
      * 현재 판매가능한 상품 수량
+     * @type uint
      * @minimum 0
      */
     readonly quantity: number;
