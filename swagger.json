@@ -714,8 +714,7 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 1,
-            "maximum": 0
+            "minimum": 1
           }
         },
         "nullable": false,
@@ -984,8 +983,7 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 0,
-            "maximum": 0
+            "minimum": 0
           }
         },
         "nullable": false,
@@ -1100,8 +1098,7 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 0,
-            "maximum": 0
+            "minimum": 0
           }
         },
         "nullable": false,
@@ -1188,8 +1185,7 @@
               }
             ],
             "x-typia-required": true,
-            "minimum": 0,
-            "maximum": 0
+            "minimum": 0
           }
         },
         "nullable": false,
