@@ -65,9 +65,15 @@ export namespace OrderSchema {
     readonly total_price: number;
 
     readonly delivery_status: DeliveryStatus;
-
+    /**
+     * ISO 8601 type
+     * @pattern ^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$
+     */
     readonly created_at: string;
-
+    /**
+     * ISO 8601 type
+     * @pattern ^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$
+     */
     readonly updated_at: string;
   }
 }
