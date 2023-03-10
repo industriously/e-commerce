@@ -3,7 +3,7 @@ import { HttpExceptionFactory } from '@COMMON/exception';
 import { IOrderRepository, IOrderUsecase, OrderSchema } from '@INTERFACE/order';
 import { ITokenService } from '@INTERFACE/token';
 import { OrderBusiness, OrderMapper } from '@ORDER/domain';
-import { ProviderBuilder, pipeAsync, List } from '@UTIL';
+import { ProviderBuilder, pipeAsync, List, Nullish } from '@UTIL';
 
 export const OrderUsecaseFactory = (
   tokenService: ITokenService,
@@ -36,14 +36,23 @@ export const OrderUsecaseFactory = (
 
         orderRepository.findManyProductsByIds,
 
-        List.map<IOrderRepository.Product, OrderSchema.OrderItem>(
-          ({ id: product_id, name, price }) => {
-            const item = order_items.find(
-              (item) => item.product_id === product_id,
+        (products) =>
+          order_items.map<OrderSchema.OrderItem>(({ product_id, quantity }) => {
+            const target = products.find(({ id }) => product_id === id);
+            const null_check = Nullish.throwIf(
+              HttpExceptionFactory(
+                'BadRequest',
+                '잘못된 상품 정보를 포함하고 있습니다.',
+              ),
             );
-            return { product_id, name, price, quantity: item?.quantity ?? 0 };
-          },
-        ),
+            const item = null_check(target);
+            return {
+              product_id,
+              name: item.name,
+              price: item.price,
+              quantity,
+            };
+          }),
 
         (items) =>
           orderRepository.create({
