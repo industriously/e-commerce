@@ -6,6 +6,7 @@ export const ProductRepository: IProductRepository = {
   create: create(createProduct),
   update: update(product_list),
   findOne: findOne(product_list),
+
   save: save(product_list),
   async remove() {},
   async findMany(page = 1) {
@@ -16,5 +17,10 @@ export const ProductRepository: IProductRepository = {
   },
   async count() {
     return product_list.filter(({ is_deleted }) => is_deleted === false).length;
+  },
+  async findManyByIds(ids) {
+    return product_list.filter((product) =>
+      ids.some((id) => id === product.id),
+    );
   },
 };

@@ -1,6 +1,7 @@
 import { TransactionMarker } from '@COMMON/decorator/lazy';
 import { HttpExceptionFactory } from '@COMMON/exception';
 import { IOrderRepository, IOrderUsecase, OrderSchema } from '@INTERFACE/order';
+import { IProductRepository } from '@INTERFACE/product';
 import { ITokenService } from '@INTERFACE/token';
 import { OrderBusiness, OrderMapper } from '@ORDER/domain';
 import { ProviderBuilder, pipeAsync, List, Nullish } from '@UTIL';
@@ -8,6 +9,7 @@ import { ProviderBuilder, pipeAsync, List, Nullish } from '@UTIL';
 export const OrderUsecaseFactory = (
   tokenService: ITokenService,
   orderRepository: IOrderRepository,
+  productRepository: IProductRepository,
 ): IOrderUsecase => {
   return ProviderBuilder<IOrderUsecase>({
     async create(token, data) {
@@ -34,7 +36,7 @@ export const OrderUsecaseFactory = (
           ({ product_id }) => product_id,
         ),
 
-        orderRepository.findManyProductsByIds,
+        productRepository.findManyByIds,
 
         (products) =>
           order_items.map<OrderSchema.OrderItem>(({ product_id, quantity }) => {

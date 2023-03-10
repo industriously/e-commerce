@@ -21,6 +21,13 @@ export const ProductRepositoryFactory = (
         List.map(ProductMapper.toAggregate),
       )(page);
     },
+    findManyByIds(ids: string[]) {
+      return pipeAsync(
+        (_ids: string[]) => product().findMany({ where: { id: { in: _ids } } }),
+
+        List.map(ProductMapper.toAggregate),
+      )(ids);
+    },
     findOne(include_deleted = false) {
       return pipeAsync(
         (id: string) => typia.assert(id),

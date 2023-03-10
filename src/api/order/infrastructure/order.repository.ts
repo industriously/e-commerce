@@ -8,9 +8,6 @@ export const OrderRepositoryFactory = (client: DBClient): IOrderRepository => {
     findMany(filter) {
       throw new Error('Function not implemented.');
     },
-    findManyProductsByIds(ids) {
-      throw new Error('Function not implemented.');
-    },
     create(data) {
       throw new Error('Function not implemented.');
     },

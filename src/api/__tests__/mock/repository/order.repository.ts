@@ -1,5 +1,5 @@
 import { IOrderRepository } from '@INTERFACE/order';
-import { createOrder, order_list, product_list } from '../data';
+import { createOrder, order_list } from '../data';
 import { create, findOne, save } from './common';
 
 export const OrderRepository: IOrderRepository = {
@@ -16,11 +16,6 @@ export const OrderRepository: IOrderRepository = {
       }
       return true;
     });
-  },
-  async findManyProductsByIds(ids) {
-    return product_list
-      .filter(({ id }) => ids.some((_id) => _id === id))
-      .map(({ id, price, name }) => ({ id, name, price }));
   },
   create: create(createOrder),
   findOne: findOne(order_list),
