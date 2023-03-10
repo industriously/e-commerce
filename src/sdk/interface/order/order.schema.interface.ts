@@ -1,11 +1,36 @@
 export namespace OrderSchema {
+  export interface Orderer {
+    /**
+     * 주문자 고유 id
+     * @format uuid
+     */
+    readonly orderer_id: string;
+    /**
+     * 주문자 명
+     */
+    readonly name: string;
+    /**
+     * 주문자 연락처
+     */
+    readonly phone: string;
+
+    /**
+     * 배달 목적지
+     */
+    readonly address: string;
+  }
+
   export interface OrderItem {
     // id = order_id:product_id
 
     /**
      * 주문 상품 정보
+     * @format uuid
      */
     readonly product_id: string;
+    /**
+     * 주문 상품명
+     */
     readonly name: string;
     /**
      * 1개당 가격
@@ -43,7 +68,7 @@ export namespace OrderSchema {
     /**
      * 주문자 id
      */
-    readonly orderer_id: string;
+    readonly orderer: Orderer;
 
     readonly order_items: OrderItem[];
 
@@ -70,7 +95,7 @@ export namespace OrderSchema {
     extends Pick<
       Aggregate,
       | 'id'
-      | 'orderer_id'
+      | 'orderer'
       | 'order_items'
       | 'total_price'
       | 'delivery_status'

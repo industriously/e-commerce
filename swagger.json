@@ -791,11 +791,16 @@
             },
             "nullable": false,
             "x-typia-required": true
+          },
+          "orderer": {
+            "$ref": "#/components/schemas/IOrderUsecase.Orderer",
+            "x-typia-required": true
           }
         },
         "nullable": false,
         "required": [
-          "order_items"
+          "order_items",
+          "orderer"
         ],
         "x-typia-jsDocTags": []
       },
@@ -843,13 +848,61 @@
             "type": "string",
             "nullable": false,
             "description": "주문 상품 정보",
-            "x-typia-required": true
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "format": "uuid"
           }
         },
         "nullable": false,
         "required": [
           "quantity",
           "product_id"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "IOrderUsecase.Orderer": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문자 명",
+            "x-typia-required": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문자 연락처",
+            "x-typia-required": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": false,
+            "description": "배달 목적지",
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "name",
+          "phone",
+          "address"
         ],
         "x-typia-jsDocTags": []
       },
@@ -927,9 +980,8 @@
             "x-typia-required": true,
             "format": "uuid"
           },
-          "orderer_id": {
-            "type": "string",
-            "nullable": false,
+          "orderer": {
+            "$ref": "#/components/schemas/OrderSchema.Orderer",
             "description": "주문자 id",
             "x-typia-required": true
           },
@@ -1010,12 +1062,67 @@
           "created_at",
           "updated_at",
           "id",
-          "orderer_id",
+          "orderer",
           "order_items",
           "total_price",
           "delivery_status",
           "payment_status",
           "is_deleted"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "OrderSchema.Orderer": {
+        "type": "object",
+        "properties": {
+          "orderer_id": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문자 고유 id",
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문자 명",
+            "x-typia-required": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문자 연락처",
+            "x-typia-required": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": false,
+            "description": "배달 목적지",
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "orderer_id",
+          "name",
+          "phone",
+          "address"
         ],
         "x-typia-jsDocTags": []
       },
@@ -1026,11 +1133,30 @@
             "type": "string",
             "nullable": false,
             "description": "주문 상품 정보",
-            "x-typia-required": true
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "format": "uuid"
           },
           "name": {
             "type": "string",
             "nullable": false,
+            "description": "주문 상품명",
             "x-typia-required": true
           },
           "price": {
@@ -1858,21 +1984,6 @@
             "nullable": false,
             "x-typia-required": true
           },
-          "oauth_type": {
-            "type": "string",
-            "enum": [
-              "google",
-              "github"
-            ],
-            "nullable": false,
-            "description": "oauth server type",
-            "x-typia-required": true
-          },
-          "address": {
-            "type": "string",
-            "nullable": true,
-            "x-typia-required": true
-          },
           "phone": {
             "type": "string",
             "nullable": true,
@@ -1895,6 +2006,21 @@
             ],
             "x-typia-required": true,
             "pattern": "^010-[0-9]{4}-[0-9]{4}$"
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "x-typia-required": true
+          },
+          "oauth_type": {
+            "type": "string",
+            "enum": [
+              "google",
+              "github"
+            ],
+            "nullable": false,
+            "description": "oauth server type",
+            "x-typia-required": true
           }
         },
         "nullable": false,
@@ -1904,9 +2030,9 @@
           "id",
           "email",
           "username",
-          "oauth_type",
+          "phone",
           "address",
-          "phone"
+          "oauth_type"
         ],
         "x-typia-jsDocTags": []
       },
@@ -1916,11 +2042,6 @@
           "username": {
             "type": "string",
             "nullable": false,
-            "x-typia-required": false
-          },
-          "address": {
-            "type": "string",
-            "nullable": true,
             "x-typia-required": false
           },
           "phone": {
@@ -1945,6 +2066,11 @@
             ],
             "x-typia-required": false,
             "pattern": "^010-[0-9]{4}-[0-9]{4}$"
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "x-typia-required": false
           }
         },
         "nullable": false,

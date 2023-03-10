@@ -3,14 +3,12 @@ import { OrderSchema } from './order.schema.interface';
 
 export namespace IOrderRepository {
   export type FindManyFilter = Partial<
-    Pick<
-      OrderSchema.Aggregate,
-      'orderer_id' | 'payment_status' | 'delivery_status'
-    >
+    Pick<OrderSchema.Aggregate, 'payment_status' | 'delivery_status'> &
+      Pick<OrderSchema.Orderer, 'orderer_id'>
   >;
   export type CreateData = Pick<
     OrderSchema.Aggregate,
-    'orderer_id' | 'order_items' | 'total_price'
+    'orderer' | 'order_items' | 'total_price'
   >;
 }
 
