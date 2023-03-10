@@ -1,7 +1,10 @@
 import { DBClientToken } from '@INFRA/DB';
 import { IProductRepository, IProductUsecase } from '@INTERFACE/product';
 import { ModuleMetadata, Provider } from '@nestjs/common';
-import { ProductUsecaseFactory } from './application';
+import {
+  FindManyProductCommandHandler,
+  ProductUsecaseFactory,
+} from './application';
 import { ProductRepositoryFactory } from './infrastructure';
 import { ProductRepositoryToken, ProductUsecaseToken } from './_constants_';
 
@@ -18,6 +21,7 @@ const ProductUsecase: Provider<IProductUsecase> = {
 };
 
 export const providers: ModuleMetadata['providers'] = [
+  FindManyProductCommandHandler,
   ProductRepository,
   ProductUsecase,
 ];

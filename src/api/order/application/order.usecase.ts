@@ -1,15 +1,17 @@
 import { TransactionMarker } from '@COMMON/decorator/lazy';
 import { HttpExceptionFactory } from '@COMMON/exception';
 import { IOrderRepository, IOrderUsecase, OrderSchema } from '@INTERFACE/order';
-import { IProductRepository } from '@INTERFACE/product';
+import { ProductSchema } from '@INTERFACE/product';
 import { ITokenService } from '@INTERFACE/token';
+import { CommandBus } from '@nestjs/cqrs';
 import { OrderBusiness, OrderMapper } from '@ORDER/domain';
+import { FindManyProductCommand } from '@PRODUCT/application';
 import { ProviderBuilder, pipeAsync, List, Nullish } from '@UTIL';
 
 export const OrderUsecaseFactory = (
-  tokenService: ITokenService,
+  commandBus: CommandBus,
   orderRepository: IOrderRepository,
-  productRepository: IProductRepository,
+  tokenService: ITokenService,
 ): IOrderUsecase => {
   return ProviderBuilder<IOrderUsecase>({
     async create(token, data) {
@@ -36,7 +38,10 @@ export const OrderUsecaseFactory = (
           ({ product_id }) => product_id,
         ),
 
-        productRepository.findManyByIds,
+        (ids: string[]) =>
+          commandBus.execute<FindManyProductCommand, ProductSchema.Aggregate[]>(
+            new FindManyProductCommand(ids),
+          ),
 
         (products) =>
           order_items.map<OrderSchema.OrderItem>(({ product_id, quantity }) => {
