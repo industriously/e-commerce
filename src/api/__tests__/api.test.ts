@@ -7,7 +7,11 @@ import { UserRepositoryToken } from '@USER/_constants_';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AopModule } from '@toss/nestjs-aop';
-import { ProductRepository, UserRepository } from './mock/repository';
+import {
+  OrderRepository,
+  ProductRepository,
+  UserRepository,
+} from './mock/repository';
 import { config, jwtService } from './mock/provider';
 import { TestUsers } from '@USER/__tests__/users';
 import { TestUser } from '@USER/__tests__/user';
@@ -16,6 +20,9 @@ import { UserModule } from '@USER/user.module';
 import { ProductModule } from '@PRODUCT/product.module';
 import { ProductRepositoryToken } from '@PRODUCT/_constants_';
 import { TestProduct } from '@PRODUCT/__tests__';
+import { OrderRepositoryToken } from '@ORDER/_constants_';
+import { OrderModule } from '@ORDER/order.module';
+import { TestOrder } from '@ORDER/__tests__';
 
 describe('API Test', () => {
   const connection = {
@@ -32,12 +39,15 @@ describe('API Test', () => {
         AopModule,
         UserModule,
         ProductModule,
+        OrderModule,
       ],
     })
       .overrideProvider(ProductRepositoryToken)
       .useValue(ProductRepository)
       .overrideProvider(UserRepositoryToken)
       .useValue(UserRepository)
+      .overrideProvider(OrderRepositoryToken)
+      .useValue(OrderRepository)
       .overrideProvider(JwtService)
       .useValue(jwtService)
       .overrideProvider(ConfigService)
@@ -111,8 +121,10 @@ describe('API Test', () => {
     );
 
     describe(
-      'product.inAcitvate - inActivate product',
+      'products.inAcitvate - inActivate product',
       TestProduct.test_in_active(connection),
     );
+
+    describe('orders.create - create order', TestOrder.test_create(connection));
   });
 });

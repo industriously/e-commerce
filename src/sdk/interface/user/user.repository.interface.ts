@@ -21,13 +21,15 @@ export namespace IUserRepository {
 
 export interface IUserRepository
   extends IRepository<UserSchema.Aggregate, string> {
-  readonly create: (
-    data: IUserRepository.CreateData,
-  ) => Promise<UserSchema.Aggregate>;
-  readonly update: (
-    data: IUserRepository.UpdateData,
-  ) => (id: string) => Promise<void>;
   readonly findOneByOauth: (
     filter: IUserRepository.FindOneByOauthFilter,
   ) => Promise<UserSchema.Aggregate | null>;
+
+  readonly create: (
+    data: IUserRepository.CreateData,
+  ) => Promise<UserSchema.Aggregate>;
+
+  readonly update: (
+    data: IUserRepository.UpdateData,
+  ) => (id: string) => Promise<void>;
 }

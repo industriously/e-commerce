@@ -17,6 +17,7 @@ export namespace IProductRepository {
 
 export interface IProductRepository
   extends IRepository<ProductSchema.Aggregate, string> {
+  readonly findMany: (page?: number) => Promise<ProductSchema.Aggregate[]>;
   readonly count: () => Promise<number>;
   readonly create: (
     data: IProductRepository.CreateData,
@@ -24,5 +25,4 @@ export interface IProductRepository
   readonly update: (
     data: IProductRepository.UpdatableData,
   ) => (id: string) => Promise<void>;
-  readonly findMany: (page?: number) => Promise<ProductSchema.Aggregate[]>;
 }

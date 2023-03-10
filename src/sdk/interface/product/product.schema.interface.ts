@@ -15,6 +15,7 @@ export namespace ProductSchema {
     readonly store_id: string;
     /**
      * 상품 가격(원)
+     * @type uint
      * @minimum 0
      */
     readonly price: number;

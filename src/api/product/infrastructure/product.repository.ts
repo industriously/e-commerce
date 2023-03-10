@@ -13,6 +13,24 @@ export const ProductRepositoryFactory = (
     count() {
       return product().count({ where: { is_deleted: false } });
     },
+    findMany(page = 1) {
+      const take = 30;
+      return pipeAsync(
+        (_page: number) =>
+          product().findMany({ take, skip: (_page - 1) * take }),
+        List.map(ProductMapper.toAggregate),
+      )(page);
+    },
+    findOne(include_deleted = false) {
+      return pipeAsync(
+        (id: string) => typia.assert(id),
+        (id) =>
+          product().findFirst({
+            where: { id, is_deleted: include_deleted ? undefined : false },
+          }),
+        map(ProductMapper.toAggregate),
+      );
+    },
     create(data) {
       return pipeAsync(
         typia.createAssertPrune<IProductRepository.CreateData>(),
@@ -33,24 +51,7 @@ export const ProductRepositoryFactory = (
         },
       );
     },
-    async findMany(page = 1) {
-      const take = 30;
-      return pipeAsync(
-        (_page: number) =>
-          product().findMany({ take, skip: (_page - 1) * take }),
-        List.map(ProductMapper.toAggregate),
-      )(page);
-    },
-    findOne(include_deleted = false) {
-      return pipeAsync(
-        (id: string) => typia.assert(id),
-        (id) =>
-          product().findFirst({
-            where: { id, is_deleted: include_deleted ? undefined : false },
-          }),
-        map(ProductMapper.toAggregate),
-      );
-    },
+
     save(aggregate) {
       return pipe(
         typia.createAssertPrune<ProductSchema.Aggregate>(),

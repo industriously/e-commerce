@@ -11,6 +11,119 @@
     "title": "E-Commerce Server"
   },
   "paths": {
+    "/orders": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "주문 목록",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IOrderUsecase.CreateData"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "생성된 주문 정보",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderSchema.Detail"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          },
+          "400": {
+            "description": "잘못된 토큰입니다."
+          },
+          "404": {
+            "description": "이미 결제 대기중인 주문이 있습니다."
+          }
+        },
+        "description": "주문 생성 요청 API",
+        "x-nestia-namespace": "orders.create",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "order",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "token",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "사용자 access token",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "param",
+            "text": [
+              {
+                "text": "body",
+                "kind": "parameterName"
+              },
+              {
+                "text": " ",
+                "kind": "space"
+              },
+              {
+                "text": "주문 목록",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "returns",
+            "text": [
+              {
+                "text": "생성된 주문 정보",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throw",
+            "text": [
+              {
+                "text": "400 잘못된 토큰입니다.",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throw",
+            "text": [
+              {
+                "text": "404 이미 결제 대기중인 주문이 있습니다.",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "/products": {
       "get": {
         "tags": [
@@ -667,6 +780,343 @@
   },
   "components": {
     "schemas": {
+      "IOrderUsecase.CreateData": {
+        "type": "object",
+        "properties": {
+          "order_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IOrderUsecase.OrderItem",
+              "x-typia-required": true
+            },
+            "nullable": false,
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "order_items"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "IOrderUsecase.OrderItem": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "nullable": false,
+            "description": "주문 수량",
+            "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          },
+          "product_id": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문 상품 정보",
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "quantity",
+          "product_id"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "OrderSchema.Detail": {
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "nullable": false,
+            "description": "ISO 8601 type",
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "pattern": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+          },
+          "updated_at": {
+            "type": "string",
+            "nullable": false,
+            "description": "ISO 8601 type",
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "pattern": "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}Z$"
+          },
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "uuid"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "uuid",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "format": "uuid"
+          },
+          "orderer_id": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문자 id",
+            "x-typia-required": true
+          },
+          "order_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderSchema.OrderItem",
+              "x-typia-required": true
+            },
+            "nullable": false,
+            "x-typia-required": true
+          },
+          "total_price": {
+            "type": "integer",
+            "nullable": false,
+            "description": "상품 금액 및 할인이 적용된\n최종 결제 금액",
+            "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          },
+          "delivery_status": {
+            "type": "string",
+            "enum": [
+              "UnReady",
+              "Ready",
+              "Delivering",
+              "Delivered"
+            ],
+            "nullable": false,
+            "x-typia-required": true
+          },
+          "payment_status": {
+            "type": "string",
+            "enum": [
+              "UnPaid",
+              "Paid"
+            ],
+            "nullable": false,
+            "x-typia-required": true
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "nullable": false,
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "orderer_id",
+          "order_items",
+          "total_price",
+          "delivery_status",
+          "payment_status",
+          "is_deleted"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "OrderSchema.OrderItem": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "nullable": false,
+            "description": "주문 상품 정보",
+            "x-typia-required": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-required": true
+          },
+          "price": {
+            "type": "integer",
+            "nullable": false,
+            "description": "1개당 가격",
+            "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          },
+          "quantity": {
+            "type": "integer",
+            "nullable": false,
+            "description": "주문 수량",
+            "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
+              {
+                "kind": "minimum",
+                "value": 0
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "minimum",
+                "text": [
+                  {
+                    "text": "0",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "minimum": 0
+          }
+        },
+        "nullable": false,
+        "required": [
+          "product_id",
+          "name",
+          "price",
+          "quantity"
+        ],
+        "x-typia-jsDocTags": []
+      },
       "PaginatedResponse_lt_ProductSchema.General_gt_": {
         "type": "object",
         "properties": {
@@ -781,16 +1231,29 @@
             "pattern": "uuid"
           },
           "price": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "상품 가격(원)",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
@@ -919,16 +1382,29 @@
             "pattern": "uuid"
           },
           "price": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "상품 가격(원)",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
@@ -1034,16 +1510,29 @@
             "pattern": "uuid"
           },
           "price": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "상품 가격(원)",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
@@ -1121,16 +1610,29 @@
             "x-typia-required": true
           },
           "price": {
-            "type": "number",
+            "type": "integer",
             "nullable": false,
             "description": "상품 가격(원)",
             "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "uint"
+              },
               {
                 "kind": "minimum",
                 "value": 0
               }
             ],
             "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "uint",
+                    "kind": "text"
+                  }
+                ]
+              },
               {
                 "name": "minimum",
                 "text": [
