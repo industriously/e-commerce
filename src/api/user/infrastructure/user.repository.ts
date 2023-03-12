@@ -1,17 +1,17 @@
 import { UserMapper } from '@USER/domain';
 import { map, pipeAsync } from '@UTIL';
-import { IUserRepository, UserSchema } from '@INTERFACE/user';
+import { UserRepository, UserSchema } from '@INTERFACE/user';
 import typia from 'typia';
 import { DBClient } from '@INTERFACE/common';
 import { pipe } from 'rxjs';
 
-export const UserRepositoryFactory = (client: DBClient): IUserRepository => {
+export const UserRepositoryFactory = (client: DBClient): UserRepository => {
   const user = () => client.get().user;
   return {
     create(data) {
       return pipeAsync(
         // validate input
-        typia.createAssertPrune<IUserRepository.CreateData>(),
+        typia.createAssertPrune<UserRepository.CreateData>(),
         // create user
         (data) => user().create({ data }),
         // transform to aggregate
@@ -36,7 +36,7 @@ export const UserRepositoryFactory = (client: DBClient): IUserRepository => {
     findOneByOauth(filter) {
       return pipeAsync(
         // validate input
-        typia.createAssertPrune<IUserRepository.FindOneByOauthFilter>(),
+        typia.createAssertPrune<UserRepository.FindOneByOauthFilter>(),
         // find user by oauth data or email
         ({ sub, oauth_type, email }) =>
           user().findFirst({ where: { OR: [{ email }, { sub, oauth_type }] } }),

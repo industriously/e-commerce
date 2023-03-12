@@ -1,20 +1,20 @@
 import { UserMapper } from '@USER/domain';
 import { ProviderBuilder, pipeAsync, Nullish } from '@UTIL';
-import { ITokenService, TokenSchema } from '@INTERFACE/token';
-import { IUserRepository, IUserUsecase } from '@INTERFACE/user';
+import { TokenService, TokenSchema } from '@INTERFACE/token';
+import { UserRepository, UserUsecase } from '@INTERFACE/user';
 import { HttpExceptionFactory } from '@COMMON/exception';
 import { pipe } from 'rxjs';
 
 export const UserUsecaseFactory = (
-  repository: IUserRepository,
-  tokenService: ITokenService,
-): IUserUsecase => {
+  repository: UserRepository,
+  tokenService: TokenService,
+): UserUsecase => {
   const get_id_from_token = () =>
     [
       tokenService.getAccessTokenPayload,
       ({ id }: TokenSchema.AccessTokenPayload) => id,
     ] as const;
-  return ProviderBuilder<IUserUsecase>({
+  return ProviderBuilder<UserUsecase>({
     getPublic(id) {
       return pipeAsync(
         repository.findOne(),

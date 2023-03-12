@@ -1,6 +1,6 @@
 import { DBClientToken } from '@INFRA/DB';
-import { IProductRepository, IProductUsecase } from '@INTERFACE/product';
-import { ModuleMetadata, Provider } from '@nestjs/common';
+import { ProductRepository, ProductUsecase } from '@INTERFACE/product';
+import { Provider } from '@nestjs/common';
 import {
   FindManyProductCommandHandler,
   ProductUsecaseFactory,
@@ -8,19 +8,19 @@ import {
 import { ProductRepositoryFactory } from './infrastructure';
 import { ProductRepositoryToken, ProductUsecaseToken } from './_constants_';
 
-const ProductRepository: Provider<IProductRepository> = {
+const ProductRepository: Provider<ProductRepository> = {
   inject: [DBClientToken],
   useFactory: ProductRepositoryFactory,
   provide: ProductRepositoryToken,
 };
 
-const ProductUsecase: Provider<IProductUsecase> = {
+const ProductUsecase: Provider<ProductUsecase> = {
   inject: [ProductRepositoryToken],
   useFactory: ProductUsecaseFactory,
   provide: ProductUsecaseToken,
 };
 
-export const providers: ModuleMetadata['providers'] = [
+export const providers: Provider[] = [
   FindManyProductCommandHandler,
   ProductRepository,
   ProductUsecase,

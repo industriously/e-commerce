@@ -22,7 +22,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IOrderUsecase.CreateData"
+                "$ref": "#/components/schemas/OrderUsecase.CreateData"
               }
             }
           },
@@ -124,6 +124,78 @@
         ]
       }
     },
+    "/orders/{order_id}/payment": {
+      "post": {
+        "tags": [
+          "order",
+          "payment"
+        ],
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderUsecase.ConfirmBody"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "x-nestia-encrypted": false
+          },
+          "400": {
+            "description": "잘못된 토큰입니다."
+          }
+        },
+        "description": "결제 확인 요청 API\n\niamport 서비스에서 결제 후, 결제 확인 요청",
+        "x-nestia-namespace": "orders.payment.confirm",
+        "x-nestia-jsDocTags": [
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "order",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "tag",
+            "text": [
+              {
+                "text": "payment",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throw",
+            "text": [
+              {
+                "text": "400 잘못된 토큰입니다.",
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "/products": {
       "get": {
         "tags": [
@@ -204,7 +276,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IProductUsecase.CreateData"
+                "$ref": "#/components/schemas/ProductUsecase.CreateData"
               }
             }
           },
@@ -379,7 +451,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IProductUsecase.UpdateData"
+                "$ref": "#/components/schemas/ProductUsecase.UpdateData"
               }
             }
           },
@@ -521,7 +593,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
+                "$ref": "#/components/schemas/AuthUsecase.SignInBody"
               }
             }
           },
@@ -534,7 +606,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IAuthUsecase.SignInResponse"
+                  "$ref": "#/components/schemas/AuthUsecase.SignInResponse"
                 }
               }
             },
@@ -567,7 +639,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IAuthUsecase.SignInBody"
+                "$ref": "#/components/schemas/AuthUsecase.SignInBody"
               }
             }
           },
@@ -580,7 +652,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IAuthUsecase.SignInResponse"
+                  "$ref": "#/components/schemas/AuthUsecase.SignInResponse"
                 }
               }
             },
@@ -614,7 +686,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IAuthUsecase.RefreshResponse"
+                  "$ref": "#/components/schemas/AuthUsecase.RefreshResponse"
                 }
               }
             },
@@ -679,7 +751,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IUserUsecase.UpdateData"
+                "$ref": "#/components/schemas/UserUsecase.UpdateData"
               }
             }
           },
@@ -780,20 +852,20 @@
   },
   "components": {
     "schemas": {
-      "IOrderUsecase.CreateData": {
+      "OrderUsecase.CreateData": {
         "type": "object",
         "properties": {
           "order_items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IOrderUsecase.OrderItem",
+              "$ref": "#/components/schemas/OrderUsecase.OrderItem",
               "x-typia-required": true
             },
             "nullable": false,
             "x-typia-required": true
           },
           "orderer": {
-            "$ref": "#/components/schemas/IOrderUsecase.Orderer",
+            "$ref": "#/components/schemas/OrderUsecase.Orderer",
             "x-typia-required": true
           }
         },
@@ -804,7 +876,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IOrderUsecase.OrderItem": {
+      "OrderUsecase.OrderItem": {
         "type": "object",
         "properties": {
           "quantity": {
@@ -876,7 +948,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IOrderUsecase.Orderer": {
+      "OrderUsecase.Orderer": {
         "type": "object",
         "properties": {
           "name": {
@@ -1243,6 +1315,21 @@
         ],
         "x-typia-jsDocTags": []
       },
+      "OrderUsecase.ConfirmBody": {
+        "type": "object",
+        "properties": {
+          "imp_uid": {
+            "type": "string",
+            "nullable": false,
+            "x-typia-required": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "imp_uid"
+        ],
+        "x-typia-jsDocTags": []
+      },
       "PaginatedResponse_lt_ProductSchema.General_gt_": {
         "type": "object",
         "properties": {
@@ -1602,7 +1689,7 @@
         "description": "판매자만 보이는 정보 등을 제거한 상품 상세 정보",
         "x-typia-jsDocTags": []
       },
-      "IProductUsecase.CreateData": {
+      "ProductUsecase.CreateData": {
         "type": "object",
         "properties": {
           "name": {
@@ -1726,7 +1813,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IProductUsecase.UpdateData": {
+      "ProductUsecase.UpdateData": {
         "type": "object",
         "properties": {
           "name": {
@@ -1825,7 +1912,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IAuthUsecase.SignInBody": {
+      "AuthUsecase.SignInBody": {
         "type": "object",
         "properties": {
           "code": {
@@ -1840,7 +1927,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IAuthUsecase.SignInResponse": {
+      "AuthUsecase.SignInResponse": {
         "type": "object",
         "properties": {
           "access_token": {
@@ -1867,7 +1954,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IAuthUsecase.RefreshResponse": {
+      "AuthUsecase.RefreshResponse": {
         "type": "object",
         "properties": {
           "access_token": {
@@ -2036,7 +2123,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IUserUsecase.UpdateData": {
+      "UserUsecase.UpdateData": {
         "type": "object",
         "properties": {
           "username": {

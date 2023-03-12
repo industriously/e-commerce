@@ -20,9 +20,9 @@ import { UserModule } from '@USER/user.module';
 import { ProductModule } from '@PRODUCT/product.module';
 import { ProductRepositoryToken } from '@PRODUCT/_constants_';
 import { TestProduct } from '@PRODUCT/__tests__';
-import { OrderRepositoryToken } from '@ORDER/_constants_';
-import { OrderModule } from '@ORDER/order.module';
-import { TestOrder } from '@ORDER/__tests__';
+import { OrderRepositoryToken } from 'src/api/orders/_constants_';
+import { OrderModule } from 'src/api/orders/order.module';
+import { TestOrder } from 'src/api/orders/__tests__';
 
 describe('API Test', () => {
   const connection = {

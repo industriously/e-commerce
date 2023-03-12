@@ -1,6 +1,6 @@
 import { UserSchema } from './user.schema.interface';
 
-export namespace IAuthUsecase {
+export namespace AuthUsecase {
   export interface SignInBody {
     readonly code: string;
   }
@@ -16,9 +16,9 @@ export namespace IAuthUsecase {
   }
 }
 
-export interface IAuthUsecase {
+export interface AuthUsecase {
   readonly signIn: (
     profile: UserSchema.OauthProfile,
-  ) => Promise<IAuthUsecase.SignInResponse>;
-  readonly refresh: (token: string) => Promise<IAuthUsecase.RefreshResponse>;
+  ) => Promise<AuthUsecase.SignInResponse>;
+  readonly refresh: (token: string) => Promise<AuthUsecase.RefreshResponse>;
 }

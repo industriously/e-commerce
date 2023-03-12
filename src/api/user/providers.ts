@@ -1,5 +1,5 @@
 import { DBClientToken } from '@INFRA/DB';
-import { IAuthUsecase, IUserRepository, IUserUsecase } from '@INTERFACE/user';
+import { AuthUsecase, UserRepository, UserUsecase } from '@INTERFACE/user';
 import { Provider } from '@nestjs/common';
 import { TokenServiceToken } from '../token/constants';
 import { AuthUsecaseFactory, UserUsecaseFactory } from './application';
@@ -24,17 +24,17 @@ const GithubStrategyProvider: Provider<GithubStrategy> = {
   useClass: GithubStrategy,
   provide: GithubStrategyToken,
 };
-const UserRepository: Provider<IUserRepository> = {
+const UserRepository: Provider<UserRepository> = {
   inject: [DBClientToken],
   useFactory: UserRepositoryFactory,
   provide: UserRepositoryToken,
 };
-const UserUsecase: Provider<IUserUsecase> = {
+const UserUsecase: Provider<UserUsecase> = {
   inject: [UserRepositoryToken, TokenServiceToken],
   useFactory: UserUsecaseFactory,
   provide: UserUsecaseToken,
 };
-const AuthUsecase: Provider<IAuthUsecase> = {
+const AuthUsecase: Provider<AuthUsecase> = {
   inject: [UserRepositoryToken, TokenServiceToken],
   useFactory: AuthUsecaseFactory,
   provide: AuthUsecaseToken,

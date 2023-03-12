@@ -8,7 +8,7 @@ import { Fetcher } from "@nestia/fetcher";
 import type { IConnection } from "@nestia/fetcher";
 import typia from "typia";
 
-import type { IAuthUsecase } from "./../../../interface/user/auth.usecase.interface";
+import type { AuthUsecase } from "./../../../interface/user/auth.usecase.interface";
 
 /**
  * 로그인 테스트용 api
@@ -69,7 +69,7 @@ export namespace signInTestCb
 export function signInGoogle
     (
         connection: IConnection,
-        body: IAuthUsecase.SignInBody
+        body: AuthUsecase.SignInBody
     ): Promise<signInGoogle.Output>
 {
     return Fetcher.fetch
@@ -84,8 +84,8 @@ export function signInGoogle
 }
 export namespace signInGoogle
 {
-    export type Input = IAuthUsecase.SignInBody;
-    export type Output = IAuthUsecase.SignInResponse;
+    export type Input = AuthUsecase.SignInBody;
+    export type Output = AuthUsecase.SignInResponse;
 
     export const METHOD = "POST" as const;
     export const PATH: string = "/sign-in/google";

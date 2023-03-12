@@ -8,8 +8,10 @@ import { Fetcher } from "@nestia/fetcher";
 import type { IConnection } from "@nestia/fetcher";
 import typia from "typia";
 
-import type { IOrderUsecase } from "./../../interface/order/order.usecase.interface";
+import type { OrderUsecase } from "./../../interface/order/order.usecase.interface";
 import type { OrderSchema } from "./../../interface/order/order.schema.interface";
+
+export * as payment from "./payment";
 
 /**
  * 주문 생성 요청 API
@@ -29,7 +31,7 @@ import type { OrderSchema } from "./../../interface/order/order.schema.interface
 export function create
     (
         connection: IConnection,
-        body: IOrderUsecase.CreateData
+        body: OrderUsecase.CreateData
     ): Promise<create.Output>
 {
     return Fetcher.fetch
@@ -44,7 +46,7 @@ export function create
 }
 export namespace create
 {
-    export type Input = IOrderUsecase.CreateData;
+    export type Input = OrderUsecase.CreateData;
     export type Output = OrderSchema.Detail;
 
     export const METHOD = "POST" as const;

@@ -1,17 +1,17 @@
 import { HttpExceptionFactory } from '@COMMON/exception';
 import { PaginatedResponse } from '@INTERFACE/common';
 import {
-  IProductRepository,
-  IProductUsecase,
+  ProductRepository,
+  ProductUsecase,
   ProductSchema,
 } from '@INTERFACE/product';
 import { ProductBusiness, ProductMapper } from '@PRODUCT/domain';
 import { List, Nullish, pipeAsync, ProviderBuilder } from '@UTIL';
 
 export const ProductUsecaseFactory = (
-  repository: IProductRepository,
-): IProductUsecase => {
-  return ProviderBuilder<IProductUsecase>({
+  repository: ProductRepository,
+): ProductUsecase => {
+  return ProviderBuilder<ProductUsecase>({
     getCount() {
       return repository.count();
     },

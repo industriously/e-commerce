@@ -1,8 +1,8 @@
-import { IUserRepository } from '@INTERFACE/user';
+import { UserRepository as Repository } from '@INTERFACE/user';
 import { createUser, user_list } from '../data';
 import { create, findOne, save, update } from './common';
 
-export const UserRepository: IUserRepository = {
+export const UserRepository: Repository = {
   create: create(createUser),
   update: update(user_list),
   findOne: findOne(user_list),

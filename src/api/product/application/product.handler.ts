@@ -1,4 +1,4 @@
-import { IProductRepository, ProductSchema } from '@INTERFACE/product';
+import { ProductRepository, ProductSchema } from '@INTERFACE/product';
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { ProductRepositoryToken } from '@PRODUCT/_constants_';
@@ -12,7 +12,7 @@ export class FindManyProductCommandHandler
   implements ICommandHandler<FindManyProductCommand>
 {
   constructor(
-    @Inject(ProductRepositoryToken) private repository: IProductRepository,
+    @Inject(ProductRepositoryToken) private repository: ProductRepository,
   ) {}
 
   async execute(

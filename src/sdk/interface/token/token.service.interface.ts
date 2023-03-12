@@ -1,7 +1,7 @@
 import { UserSchema } from '@INTERFACE/user';
 import { TokenSchema } from './token.schema.interface';
 
-export interface ITokenService {
+export interface TokenService {
   readonly getAccessToken: (aggregate: UserSchema.Aggregate) => string;
   readonly getRefreshToken: (aggregate: UserSchema.Aggregate) => string;
   readonly getIdToken: (aggregate: UserSchema.Aggregate) => string;

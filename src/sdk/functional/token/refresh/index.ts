@@ -7,7 +7,7 @@
 import { Fetcher } from "@nestia/fetcher";
 import type { IConnection } from "@nestia/fetcher";
 
-import type { IAuthUsecase } from "./../../../interface/user/auth.usecase.interface";
+import type { AuthUsecase } from "./../../../interface/user/auth.usecase.interface";
 
 /**
  * 인증 토큰 재발행 API
@@ -35,7 +35,7 @@ export function refreshToken
 }
 export namespace refreshToken
 {
-    export type Output = IAuthUsecase.RefreshResponse;
+    export type Output = AuthUsecase.RefreshResponse;
 
     export const METHOD = "GET" as const;
     export const PATH: string = "/token/refresh";

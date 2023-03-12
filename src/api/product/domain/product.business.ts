@@ -1,9 +1,9 @@
-import { IProductRepository, ProductSchema } from '@INTERFACE/product';
+import { ProductRepository, ProductSchema } from '@INTERFACE/product';
 import { Predicate } from '@UTIL';
 
 export namespace ProductBusiness {
   export const update =
-    (data: Omit<IProductRepository.UpdatableData, 'is_deleted'>) =>
+    (data: Omit<ProductRepository.UpdatableData, 'is_deleted'>) =>
     (target: ProductSchema.Aggregate): ProductSchema.Aggregate => {
       (target as any).description = data.description ?? target.description;
       (target as any).name = data.name ?? target.name;

@@ -1,11 +1,11 @@
-import { IOrderRepository } from '@INTERFACE/order';
+import { OrderRepository as Repository } from '@INTERFACE/order';
 import { createOrder, order_list } from '../data';
 import { create, findOne, save } from './common';
 
-export const OrderRepository: IOrderRepository = {
+export const OrderRepository: Repository = {
   async findMany({ orderer_id, payment_status, delivery_status }) {
     return order_list.filter((order) => {
-      if (orderer_id && orderer_id !== order.orderer_id) {
+      if (orderer_id && orderer_id !== order.orderer.orderer_id) {
         return false;
       }
       if (payment_status && payment_status !== order.payment_status) {

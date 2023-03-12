@@ -1,13 +1,13 @@
 import { UserSchema } from './user.schema.interface';
 
-export namespace IUserUsecase {
+export namespace UserUsecase {
   export interface UpdateData
     extends Partial<
       Pick<UserSchema.Aggregate, 'username' | 'address' | 'phone'>
     > {}
 }
 
-export interface IUserUsecase {
+export interface UserUsecase {
   readonly getPublic: (
     id: UserSchema.Aggregate['id'],
   ) => Promise<UserSchema.Public>;
@@ -16,7 +16,7 @@ export interface IUserUsecase {
 
   readonly update: (
     token: string,
-    data: IUserUsecase.UpdateData,
+    data: UserUsecase.UpdateData,
   ) => Promise<void>;
 
   readonly remove: (token: string) => Promise<void>;

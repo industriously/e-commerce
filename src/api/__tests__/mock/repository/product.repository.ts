@@ -1,8 +1,8 @@
-import { IProductRepository } from '@INTERFACE/product';
+import { ProductRepository as Repository } from '@INTERFACE/product';
 import { createProduct, product_list } from '../data';
 import { create, findOne, save, update } from './common';
 
-export const ProductRepository: IProductRepository = {
+export const ProductRepository: Repository = {
   create: create(createProduct),
   update: update(product_list),
   findOne: findOne(product_list),

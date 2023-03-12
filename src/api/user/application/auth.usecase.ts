@@ -1,15 +1,15 @@
 import { TransactionMarker } from '@COMMON/decorator/lazy';
 import { HttpExceptionFactory } from '@COMMON/exception';
-import { ITokenService } from '@INTERFACE/token';
-import { IAuthUsecase, IUserRepository } from '@INTERFACE/user';
+import { TokenService } from '@INTERFACE/token';
+import { AuthUsecase, UserRepository } from '@INTERFACE/user';
 import { UserBusiness } from '@USER/domain';
 import { Nullish, pipeAsync, ProviderBuilder } from '@UTIL';
 
 export const AuthUsecaseFactory = (
-  repository: IUserRepository,
-  tokenService: ITokenService,
-): IAuthUsecase => {
-  return ProviderBuilder<IAuthUsecase>({
+  repository: UserRepository,
+  tokenService: TokenService,
+): AuthUsecase => {
+  return ProviderBuilder<AuthUsecase>({
     signIn(profile) {
       return pipeAsync(
         repository.findOneByOauth,
@@ -21,7 +21,7 @@ export const AuthUsecaseFactory = (
             ? repository.save(UserBusiness.activate(agg))
             : agg,
 
-        (agg): IAuthUsecase.SignInResponse => ({
+        (agg): AuthUsecase.SignInResponse => ({
           access_token: tokenService.getAccessToken(agg),
           refresh_token: tokenService.getRefreshToken(agg),
           id_token: tokenService.getIdToken(agg),
@@ -39,7 +39,7 @@ export const AuthUsecaseFactory = (
 
         Nullish.throwIf(HttpExceptionFactory('NotFound')),
 
-        (agg): IAuthUsecase.RefreshResponse => ({
+        (agg): AuthUsecase.RefreshResponse => ({
           access_token: tokenService.getAccessToken(agg),
         }),
       )(token);

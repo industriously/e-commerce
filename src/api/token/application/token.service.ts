@@ -1,7 +1,7 @@
 import { ThrowThenMarker } from '@COMMON/decorator/lazy';
 import { HttpExceptionFactory } from '@COMMON/exception';
 import { IEnv } from '@INTERFACE/common';
-import { ITokenService, TokenSchema } from '@INTERFACE/token';
+import { TokenService, TokenSchema } from '@INTERFACE/token';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { ProviderBuilder } from '@UTIL';
@@ -12,12 +12,12 @@ import { TokenMapper } from '../domain/token.mapper';
 export const TokenServiceFactory = (
   jwtService: JwtService,
   config: ConfigService<IEnv, true>,
-): ITokenService => {
+): TokenService => {
   const throwthen = ThrowThenMarker(() => {
     throw HttpExceptionFactory('BadRequest', '잘못된 토큰입니다.');
   });
 
-  return ProviderBuilder<ITokenService>({
+  return ProviderBuilder<TokenService>({
     getAccessToken(aggregate) {
       return pipe(TokenMapper.toAccessTokenPayload, (payload) =>
         jwtService.sign(payload, {

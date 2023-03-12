@@ -9,7 +9,7 @@ import type { IConnection } from "@nestia/fetcher";
 import typia from "typia";
 
 import type { UserSchema } from "./../../interface/user/user.schema.interface";
-import type { IUserUsecase } from "./../../interface/user/user.usecase.interface";
+import type { UserUsecase } from "./../../interface/user/user.usecase.interface";
 
 /**
  * 내 프로필 보기 API
@@ -62,7 +62,7 @@ export namespace getProfile
 export function updateProfile
     (
         connection: IConnection,
-        body: IUserUsecase.UpdateData
+        body: UserUsecase.UpdateData
     ): Promise<void>
 {
     return Fetcher.fetch
@@ -77,7 +77,7 @@ export function updateProfile
 }
 export namespace updateProfile
 {
-    export type Input = IUserUsecase.UpdateData;
+    export type Input = UserUsecase.UpdateData;
 
     export const METHOD = "PATCH" as const;
     export const PATH: string = "/user";

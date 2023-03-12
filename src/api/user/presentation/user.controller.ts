@@ -1,5 +1,5 @@
 import { Authorization } from '@COMMON/decorator/http';
-import { IUserUsecase, UserSchema } from '@INTERFACE/user';
+import { UserUsecase, UserSchema } from '@INTERFACE/user';
 import { Body, Controller, Delete, Get, Inject, Patch } from '@nestjs/common';
 import { UserUsecaseToken } from '@USER/_constants_';
 import typia from 'typia';
@@ -7,7 +7,7 @@ import typia from 'typia';
 @Controller('user')
 export class UserController {
   constructor(
-    @Inject(UserUsecaseToken) private readonly userUsecase: IUserUsecase,
+    @Inject(UserUsecaseToken) private readonly userUsecase: UserUsecase,
   ) {}
 
   /**
@@ -28,9 +28,9 @@ export class UserController {
   @Patch()
   updateProfile(
     @Authorization('bearer') token: string,
-    @Body() body: IUserUsecase.UpdateData,
+    @Body() body: UserUsecase.UpdateData,
   ): Promise<void> {
-    const updateData = typia.assertPrune<IUserUsecase.UpdateData>(body);
+    const updateData = typia.assertPrune<UserUsecase.UpdateData>(body);
     return this.userUsecase.update(token, updateData);
   }
 

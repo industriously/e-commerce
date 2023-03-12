@@ -1,4 +1,4 @@
-import { IAuthUsecase, UserSchema } from '@INTERFACE/user';
+import { AuthUsecase, UserSchema } from '@INTERFACE/user';
 import { Controller, Get, Inject, Post, UseGuards } from '@nestjs/common';
 import { GithubGuard, GoogleGuard, OauthProfile } from '@USER/_auth_';
 import { AuthUsecaseToken } from '@USER/_constants_';
@@ -9,7 +9,7 @@ import typia from 'typia';
 @Controller()
 export class AuthController {
   constructor(
-    @Inject(AuthUsecaseToken) private readonly authUsecase: IAuthUsecase,
+    @Inject(AuthUsecaseToken) private readonly authUsecase: AuthUsecase,
   ) {}
 
   /**
@@ -43,9 +43,9 @@ export class AuthController {
   @UseGuards(GoogleGuard)
   @Post('sign-in/google')
   signInGoogle(
-    @TypedBody() body: IAuthUsecase.SignInBody,
+    @TypedBody() body: AuthUsecase.SignInBody,
     @OauthProfile() profile: UserSchema.OauthProfile,
-  ): Promise<IAuthUsecase.SignInResponse> {
+  ): Promise<AuthUsecase.SignInResponse> {
     return this.authUsecase.signIn(profile);
   }
 
@@ -59,9 +59,9 @@ export class AuthController {
   @UseGuards(GithubGuard)
   @Post('sign-in/github')
   signInGithub(
-    @TypedBody() body: IAuthUsecase.SignInBody,
+    @TypedBody() body: AuthUsecase.SignInBody,
     @OauthProfile() profile: UserSchema.OauthProfile,
-  ): Promise<IAuthUsecase.SignInResponse> {
+  ): Promise<AuthUsecase.SignInResponse> {
     return this.authUsecase.signIn(profile);
   }
 
@@ -75,7 +75,7 @@ export class AuthController {
   @Get('token/refresh')
   refreshToken(
     @Authorization('bearer') token: string,
-  ): Promise<IAuthUsecase.RefreshResponse> {
+  ): Promise<AuthUsecase.RefreshResponse> {
     return this.authUsecase.refresh(token);
   }
 }

@@ -1,6 +1,6 @@
 import { TypedQuery } from '@COMMON/decorator/http';
 import { Page, PaginatedResponse } from '@INTERFACE/common';
-import { IProductUsecase, ProductSchema } from '@INTERFACE/product';
+import { ProductUsecase, ProductSchema } from '@INTERFACE/product';
 import { TypedBody, TypedParam } from '@nestia/core';
 import { Controller, Get, Patch, Post, Delete, Inject } from '@nestjs/common';
 import { ProductUsecaseToken } from '@PRODUCT/_constants_';
@@ -10,7 +10,7 @@ import typia from 'typia';
 export class ProductsController {
   constructor(
     @Inject(ProductUsecaseToken)
-    private readonly productUsecase: IProductUsecase,
+    private readonly productUsecase: ProductUsecase,
   ) {}
 
   /**
@@ -63,7 +63,7 @@ export class ProductsController {
    */
   @Post()
   create(
-    @TypedBody() body: IProductUsecase.CreateData,
+    @TypedBody() body: ProductUsecase.CreateData,
   ): Promise<ProductSchema.Detail> {
     return this.productUsecase.create(body);
   }
@@ -79,7 +79,7 @@ export class ProductsController {
   @Patch(':product_id')
   update(
     @TypedParam('product_id', 'uuid') product_id: string,
-    @TypedBody() body: IProductUsecase.UpdateData,
+    @TypedBody() body: ProductUsecase.UpdateData,
   ): Promise<ProductSchema.Detail> {
     return this.productUsecase.update(product_id, body);
   }

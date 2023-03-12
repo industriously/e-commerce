@@ -1,5 +1,5 @@
 import { DBClient } from '@INTERFACE/common';
-import { IProductRepository, ProductSchema } from '@INTERFACE/product';
+import { ProductRepository, ProductSchema } from '@INTERFACE/product';
 import { ProductMapper } from '@PRODUCT/domain';
 import { List, map, pipeAsync, ProviderBuilder } from '@UTIL';
 import { pipe } from 'rxjs';
@@ -7,9 +7,9 @@ import typia from 'typia';
 
 export const ProductRepositoryFactory = (
   client: DBClient,
-): IProductRepository => {
+): ProductRepository => {
   const product = () => client.get().product;
-  return ProviderBuilder<IProductRepository>({
+  return ProviderBuilder<ProductRepository>({
     count() {
       return product().count({ where: { is_deleted: false } });
     },
@@ -40,7 +40,7 @@ export const ProductRepositoryFactory = (
     },
     create(data) {
       return pipeAsync(
-        typia.createAssertPrune<IProductRepository.CreateData>(),
+        typia.createAssertPrune<ProductRepository.CreateData>(),
         (data) => product().create({ data }),
         ProductMapper.toAggregate,
       )(data);

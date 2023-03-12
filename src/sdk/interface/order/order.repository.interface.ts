@@ -1,23 +1,45 @@
-import { IRepository } from '@INTERFACE/common';
 import { OrderSchema } from './order.schema.interface';
 
-export namespace IOrderRepository {
-  export type FindManyFilter = Partial<
-    Pick<OrderSchema.Aggregate, 'payment_status' | 'delivery_status'> &
-      Pick<OrderSchema.Orderer, 'orderer_id'>
-  >;
-  export type CreateData = Pick<
+export namespace OrderRepository {
+  export type OrderItemCreateInput = Omit<OrderSchema.OrderItem, 'id'>;
+
+  export interface CreateInput {
+    readonly id: string;
+    readonly store_id: string;
+    readonly orderer_id: string;
+    /**
+     * @type uint
+     * @minimum 0
+     */
+    readonly total_price: number;
+    readonly status: OrderSchema.Status;
+    readonly order_items: OrderItemCreateInput[];
+    readonly recipient: OrderSchema.Recipient;
+    readonly payment: OrderSchema.Payment;
+  }
+
+  export type OrderSimple = Pick<
     OrderSchema.Aggregate,
-    'orderer' | 'order_items' | 'total_price'
+    'id' | 'status' | 'store_id'
+  >;
+
+  export type UpdateInput = Partial<
+    Pick<OrderSchema.Aggregate, 'status' | 'payment'>
   >;
 }
 
-export interface IOrderRepository
-  extends IRepository<OrderSchema.Aggregate, string> {
-  readonly findMany: (
-    filter: IOrderRepository.FindManyFilter,
-  ) => Promise<OrderSchema.Aggregate[]>;
+export interface OrderRepository {
+  readonly findOneSimple: (
+    order_id: string,
+  ) => Promise<OrderRepository.OrderSimple>;
+
+  readonly findOne: (order_id: string) => Promise<OrderSchema.Aggregate>;
+
   readonly create: (
-    data: IOrderRepository.CreateData,
+    input: OrderRepository.CreateInput,
   ) => Promise<OrderSchema.Aggregate>;
+
+  readonly update: (
+    order_id: string,
+  ) => (input: OrderRepository.UpdateInput) => Promise<void>;
 }

@@ -1,7 +1,7 @@
 import { PaginatedResponse } from '@INTERFACE/common';
 import { ProductSchema } from './product.schema.interface';
 
-export namespace IProductUsecase {
+export namespace ProductUsecase {
   export type CreateData = Pick<
     ProductSchema.Aggregate,
     'name' | 'description' | 'price' | 'quantity' | 'store_id'
@@ -13,18 +13,18 @@ export namespace IProductUsecase {
   >;
 }
 
-export interface IProductUsecase {
+export interface ProductUsecase {
   readonly findOne: (product_id: string) => Promise<ProductSchema.Detail>;
   readonly findMany: (
     page: number,
   ) => Promise<PaginatedResponse<ProductSchema.General>>;
   readonly getCount: () => Promise<number>;
   readonly create: (
-    data: IProductUsecase.CreateData,
+    data: ProductUsecase.CreateData,
   ) => Promise<ProductSchema.Detail>;
   readonly update: (
     product_id: string,
-    data: IProductUsecase.UpdateData,
+    data: ProductUsecase.UpdateData,
   ) => Promise<ProductSchema.Detail>;
   readonly inActivate: (product_id: string) => Promise<void>;
 }

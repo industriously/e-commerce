@@ -8,7 +8,7 @@ import { Fetcher } from "@nestia/fetcher";
 import type { IConnection } from "@nestia/fetcher";
 import typia from "typia";
 
-import type { IAuthUsecase } from "./../../../interface/user/auth.usecase.interface";
+import type { AuthUsecase } from "./../../../interface/user/auth.usecase.interface";
 
 /**
  * 로그인 API
@@ -24,7 +24,7 @@ import type { IAuthUsecase } from "./../../../interface/user/auth.usecase.interf
 export function signInGithub
     (
         connection: IConnection,
-        body: IAuthUsecase.SignInBody
+        body: AuthUsecase.SignInBody
     ): Promise<signInGithub.Output>
 {
     return Fetcher.fetch
@@ -39,8 +39,8 @@ export function signInGithub
 }
 export namespace signInGithub
 {
-    export type Input = IAuthUsecase.SignInBody;
-    export type Output = IAuthUsecase.SignInResponse;
+    export type Input = AuthUsecase.SignInBody;
+    export type Output = AuthUsecase.SignInResponse;
 
     export const METHOD = "POST" as const;
     export const PATH: string = "/sign-in/github";

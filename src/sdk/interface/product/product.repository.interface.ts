@@ -1,7 +1,7 @@
 import { IRepository } from '@INTERFACE/common';
 import { ProductSchema } from './product.schema.interface';
 
-export namespace IProductRepository {
+export namespace ProductRepository {
   export type CreateData = Pick<
     ProductSchema.Aggregate,
     'description' | 'name' | 'price' | 'quantity' | 'store_id'
@@ -15,15 +15,15 @@ export namespace IProductRepository {
   >;
 }
 
-export interface IProductRepository
+export interface ProductRepository
   extends IRepository<ProductSchema.Aggregate, string> {
   readonly findMany: (page?: number) => Promise<ProductSchema.Aggregate[]>;
   readonly findManyByIds: (ids: string[]) => Promise<ProductSchema.Aggregate[]>;
   readonly count: () => Promise<number>;
   readonly create: (
-    data: IProductRepository.CreateData,
+    data: ProductRepository.CreateData,
   ) => Promise<ProductSchema.Aggregate>;
   readonly update: (
-    data: IProductRepository.UpdatableData,
+    data: ProductRepository.UpdatableData,
   ) => (id: string) => Promise<void>;
 }

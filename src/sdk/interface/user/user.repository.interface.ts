@@ -1,7 +1,7 @@
 import { IRepository } from '@INTERFACE/common';
 import { UserSchema } from './user.schema.interface';
 
-export namespace IUserRepository {
+export namespace UserRepository {
   export type CreateData = Pick<
     UserSchema.Aggregate,
     'sub' | 'oauth_type' | 'email' | 'username'
@@ -19,17 +19,17 @@ export namespace IUserRepository {
   >;
 }
 
-export interface IUserRepository
+export interface UserRepository
   extends IRepository<UserSchema.Aggregate, string> {
   readonly findOneByOauth: (
-    filter: IUserRepository.FindOneByOauthFilter,
+    filter: UserRepository.FindOneByOauthFilter,
   ) => Promise<UserSchema.Aggregate | null>;
 
   readonly create: (
-    data: IUserRepository.CreateData,
+    data: UserRepository.CreateData,
   ) => Promise<UserSchema.Aggregate>;
 
   readonly update: (
-    data: IUserRepository.UpdateData,
+    data: UserRepository.UpdateData,
   ) => (id: string) => Promise<void>;
 }

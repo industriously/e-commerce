@@ -1,4 +1,4 @@
-import { IUserUsecase } from '@INTERFACE/user';
+import { UserUsecase } from '@INTERFACE/user';
 import { IConnection } from '@nestia/fetcher';
 import { TokenServiceFactory } from '@TOKEN';
 import typia from 'typia';
@@ -36,7 +36,7 @@ export namespace TestUser {
 
   export const test_update_profile = (connection: IConnection) => () => {
     const test_bodys = user_list.map(
-      typia.createRandom<IUserUsecase.UpdateData>(),
+      typia.createRandom<UserUsecase.UpdateData>(),
     );
 
     it.each(invalid_tokens)('If token invalid', (token) =>
@@ -54,7 +54,7 @@ export namespace TestUser {
 
         for (const [key, value] of Object.entries(body)) {
           if (value !== undefined)
-            expect(user[key as keyof IUserUsecase.UpdateData]).toBe(value);
+            expect(user[key as keyof UserUsecase.UpdateData]).toBe(value);
         }
       }
     });

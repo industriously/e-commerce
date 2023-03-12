@@ -10,7 +10,7 @@ import typia from "typia";
 
 import type { PaginatedResponse } from "./../../interface/common/pagination.interface";
 import type { ProductSchema } from "./../../interface/product/product.schema.interface";
-import type { IProductUsecase } from "./../../interface/product/product.usecase.interface";
+import type { ProductUsecase } from "./../../interface/product/product.usecase.interface";
 
 export * as count from "./count";
 
@@ -130,7 +130,7 @@ export namespace find
 export function create
     (
         connection: IConnection,
-        body: IProductUsecase.CreateData
+        body: ProductUsecase.CreateData
     ): Promise<create.Output>
 {
     return Fetcher.fetch
@@ -145,7 +145,7 @@ export function create
 }
 export namespace create
 {
-    export type Input = IProductUsecase.CreateData;
+    export type Input = ProductUsecase.CreateData;
     export type Output = ProductSchema.Detail;
 
     export const METHOD = "POST" as const;
@@ -179,7 +179,7 @@ export function update
     (
         connection: IConnection,
         product_id: string,
-        body: IProductUsecase.UpdateData
+        body: ProductUsecase.UpdateData
     ): Promise<update.Output>
 {
     return Fetcher.fetch
@@ -194,7 +194,7 @@ export function update
 }
 export namespace update
 {
-    export type Input = IProductUsecase.UpdateData;
+    export type Input = ProductUsecase.UpdateData;
     export type Output = ProductSchema.Detail;
 
     export const METHOD = "PATCH" as const;

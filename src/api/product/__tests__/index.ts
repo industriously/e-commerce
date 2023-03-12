@@ -1,4 +1,4 @@
-import { IProductUsecase } from '@INTERFACE/product';
+import { ProductUsecase } from '@INTERFACE/product';
 import { IConnection } from '@nestia/fetcher';
 import { ProductBusiness } from '@PRODUCT/domain';
 import { createProduct, product_list } from 'src/api/__tests__/mock/data';
@@ -47,7 +47,7 @@ export namespace TestProduct {
 
   export const test_create = (connection: IConnection) => () => {
     const bodys = product_list.map(
-      typia.createRandom<IProductUsecase.CreateData>(),
+      typia.createRandom<ProductUsecase.CreateData>(),
     );
     it.each(bodys)(
       'create product successfully',
@@ -57,7 +57,7 @@ export namespace TestProduct {
 
   export const test_update = (connection: IConnection) => () => {
     const test_bodys = product_list.map(
-      typia.createRandom<IProductUsecase.UpdateData>(),
+      typia.createRandom<ProductUsecase.UpdateData>(),
     );
     it.each(product_list)('If active product exist', async (product) => {
       const api = update.test_success(connection)(product.id);
@@ -65,9 +65,7 @@ export namespace TestProduct {
         await api(body);
         for (const [key, value] of Object.entries(body)) {
           if (value !== undefined)
-            expect(product[key as keyof IProductUsecase.UpdateData]).toBe(
-              value,
-            );
+            expect(product[key as keyof ProductUsecase.UpdateData]).toBe(value);
         }
       }
     });
